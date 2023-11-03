@@ -7,7 +7,7 @@ To run the application:
 ```
 cd backend 
 
-npm instal
+npm install
 
 npm run start
 ```
