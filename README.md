@@ -4,22 +4,26 @@ The backend and frontend are separated to different folders with respective name
 
 To run the application:
 
+```
 cd backend 
 
 npm instal
 
 npm run start
+```
 
 The backend will run on port 3001
 
 
 For the frontend:
 
+```
 cd frontend 
 
 npm install
 
 npm start
+```
 
 The frontend will run on port 3000
 
