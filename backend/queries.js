@@ -11,3 +11,16 @@ export const searchAlbums = async (pool, searchTerm) => {
     console.error("Error fetching the albums table", err);
   }
 };
+
+export const getGenres = async (pool) => {
+  const query = {
+    text: "SELECT * FROM categories;",
+  };
+
+  try {
+    const response = await pool.query(query);
+    return response.rows;
+  } catch (err) {
+    console.error("Error fetching the albums table", err);
+  }
+};

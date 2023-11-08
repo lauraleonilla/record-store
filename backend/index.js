@@ -1,5 +1,5 @@
 import express from "express";
-import { searchAlbums } from "./queries.js";
+import { searchAlbums, getGenres } from "./queries.js";
 import cors from "cors";
 import pkg from "pg";
 import dotenv from "dotenv";
@@ -35,6 +35,11 @@ app.get("/", (req, res) => {
 app.post("/search", async (req, res) => {
   const searchTerm = req?.body?.searchTerm;
   const response = await searchAlbums(pool, searchTerm);
+  res.send(response);
+});
+
+app.get("/genres", async (req, res) => {
+  const response = await getGenres(pool);
   res.send(response);
 });
 
