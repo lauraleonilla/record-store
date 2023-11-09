@@ -15,9 +15,7 @@ const TopBar = () => {
   );
 };
 
-const Container = styled.div`
-  height: 100px;
-`;
+const Container = styled.div``;
 
 const WhiteBar = styled.div`
   background-color: ${(props) => props.theme.white};
