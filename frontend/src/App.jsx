@@ -10,10 +10,13 @@ import { Routes, Route } from 'react-router-dom';
 import Footer from './Footer';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
+import ShoppingCart from './ShoppingCart';
+
 
 const App = () => {
   const [data, setData] = useState(null);
 
+  
   useEffect(() => {
     const apiUrl = 'http://localhost:3001';
     const fetchData = async () => {
@@ -23,6 +26,9 @@ const App = () => {
     };
     fetchData();
   }, [data]);
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
