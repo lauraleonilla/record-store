@@ -12,7 +12,6 @@ import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import ShoppingCart from './ShoppingCart';
 
-
 const App = () => {
   const [data, setData] = useState(null);
 
@@ -26,9 +25,6 @@ const App = () => {
     };
     fetchData();
   }, [data]);
-
-
-
 
   return (
     <ThemeProvider theme={theme}>
