@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -48,5 +47,5 @@ AlbumCard.propTypes = {
   albumName: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
   productType: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired
+  price: PropTypes.string.isRequired
 };

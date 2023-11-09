@@ -1,7 +1,13 @@
-const express = require('express');
+import express from 'express';
+import {
+  getAllAlbums,
+  getNewReleases,
+} from '../controllers/albumController.js';
+
 const router = express.Router();
-const albumController = require('../controllers/albumController');
 
-router.get('/newReleases', albumController.getNewReleases);
+router.get('/newreleases', getNewReleases);
 
-module.export = router;
+router.get('/all', getAllAlbums);
+
+export default router;

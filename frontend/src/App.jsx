@@ -9,6 +9,7 @@ import { GlobalStyle, theme } from './assets/globalStyles';
 import { Routes, Route } from 'react-router-dom';
 import Footer from './Footer';
 import Home from './pages/Home';
+import Catalog from './pages/Catalog';
 
 const App = () => {
   const [data, setData] = useState(null);
@@ -31,6 +32,7 @@ const App = () => {
         <Main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/records" element={<Catalog />} />
           </Routes>
         </Main>
         <Footer />
