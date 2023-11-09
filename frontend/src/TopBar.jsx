@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import SearchField from './SearchField';
 
 const TopBar = () => {
   return (
@@ -10,7 +11,9 @@ const TopBar = () => {
         <HeaderNavLink to="/">ETUSIVU</HeaderNavLink>
         <HeaderNavLink to="/records">LEVYT</HeaderNavLink>
       </GreenBar>
-      <WhiteBar />
+      <WhiteBar>
+        <SearchField />
+      </WhiteBar>
     </Container>
   );
 };
@@ -20,6 +23,9 @@ const Container = styled.div``;
 const WhiteBar = styled.div`
   background-color: ${(props) => props.theme.white};
   height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 const GreenBar = styled.div`
   background-color: ${(props) => props.theme.green};
