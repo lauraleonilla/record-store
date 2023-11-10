@@ -14,6 +14,7 @@ import ShoppingCart from './ShoppingCart';
 
 const App = () => {
   const [data, setData] = useState(null);
+  
 
   
   useEffect(() => {
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="/records" element={<Catalog />} />
           </Routes>
         </Main>
+        <ShoppingCart />
         <Footer />
       </StyledApp>
     </ThemeProvider>

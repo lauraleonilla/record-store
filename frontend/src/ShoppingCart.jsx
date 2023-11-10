@@ -4,9 +4,10 @@ import ArrayRight from './assets/arrow-right.png';
 import ArrayLeft from './assets/arrow-left.png';
 import TrashCan from './assets/trash-can.png';
 
-/* tuotekorttiin
-const [cart, setCart] = useState([]);
 
+/* ennen mergeä testidatassa käytettyjä. nämä muistiin
+
+const [cart, setCart] = useState([]);
 
 const addToCart = (album) => {
   const updatedCart = [...cart, album];
@@ -17,59 +18,43 @@ const addToCart = (album) => {
   saveCartToLocalStorage(updatedCart); 
 };
 
-<ShoppingCart addToCart={addToCart} cart={cart} setCart={setCart}/>
+<ShoppingCart addToCart={addToCart} cart={cart} setCart={setCart} />
 
-        <div style={{ display: 'inline', float: 'left', width: '700px' }}>
-          <h1>Albums</h1>
-          <ul>
-            {albums.map((album) => (
-               <li key={album.albumId}>
-               <h2>{album.albumName}</h2>
-               <p>Artist: {album.artistName}</p>
-               <p>Release Date: {album.releaseDate}</p>
-               <p>Record Label: {album.recordLabel}</p>
-               <p>Category: {album.category}</p>
-               <p>Price: {album.price}</p>
-               <button onClick={() => addToCart(album)}>Lisää ostoskoriin</button>
-             </li>
-            ))}
-          </ul>
-        </div>
+<button onClick={() => addToCart(album)}>Lisää ostoskoriin</button>
+
  */
 
 
-const ShoppingCart = ({ addToCart, cart, setCart }) => {
+const ShoppingCart = ({  }) => {
   const [openCartButtonVisible, setOpenCartButtonVisible] = useState(true);
   const [cartVisible, setCartVisible] = useState(false);
+  const [cart, setCart] = useState([]); /* tämä toistaiseksi tässä että toimii */
+
 
   const saveCartToLocalStorage = (cart) => {
     localStorage.setItem('cart', JSON.stringify(cart));
   };
 
   useEffect(() => {
-    // Load cart from local storage when the component mounts
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
   }, []);
 
-  const handleButtonClick = () => {
+  const openCart = () => {
     setOpenCartButtonVisible(false);
     setCartVisible(true);
   };
 
-  const handleCartClose = () => {
+  const closeCart = () => {
     setOpenCartButtonVisible(true);
     setCartVisible(false);
   };
 
- 
-
   const numItemsInCart = cart.length;
 
-  const handleDelete = (index) => {
-    // Create a new array with the item removed
+  const deleteCartItem = (index) => {
     const updatedCart = cart.filter((_, i) => i !== index);
     setCart(updatedCart);
     saveCartToLocalStorage(updatedCart);
@@ -77,20 +62,20 @@ const ShoppingCart = ({ addToCart, cart, setCart }) => {
 
   const calculateTotalPrice = () => {
     const total = cart.reduce((acc, item) => acc + item.price, 0);
-    return total.toFixed(2);;
+    return total.toFixed(2);
   } 
  
   return (
     <ComponentContainer>
       {openCartButtonVisible && (
-        <OpenCartButton onClick={handleButtonClick}>
+        <OpenCartButton onClick={openCart}>
           <CartIconRight src={ArrayLeft} alt="Left Array" />
           Ostoskori {numItemsInCart}
         </OpenCartButton>
       )}
       {cartVisible && (
         <CartContainer>
-          <CloseCartButton onClick={handleCartClose}>
+          <CloseCartButton onClick={closeCart}>
             <CartIconLeft src={ArrayRight} alt="Right Array" />
             Ostoskori {numItemsInCart}
           </CloseCartButton>
@@ -104,7 +89,7 @@ const ShoppingCart = ({ addToCart, cart, setCart }) => {
             </ProductInfo>
             <Price>{item.price}</Price>
             <DeleteIconHolder>
-              <DeleteIcon onClick={() => handleDelete(index)} src={TrashCan} alt="Trash Icon" />
+              <DeleteIcon onClick={() => deleteCartItem(index)} src={TrashCan} alt="Trash Icon" />
             </DeleteIconHolder>
           </CartProduct>
             ))}
@@ -118,6 +103,9 @@ const ShoppingCart = ({ addToCart, cart, setCart }) => {
     </ComponentContainer>
   );
 }
+
+
+
 
 const ComponentContainer = styled.div`
   display: flex;
