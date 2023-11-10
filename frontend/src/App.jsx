@@ -14,9 +14,7 @@ import ShoppingCart from './ShoppingCart';
 
 const App = () => {
   const [data, setData] = useState(null);
-  
 
-  
   useEffect(() => {
     const apiUrl = 'http://localhost:3001';
     const fetchData = async () => {
