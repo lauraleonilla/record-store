@@ -32,15 +32,22 @@ export async function getAllAlbums(req, res) {
   }
 }
 
-export const searchAlbums = async (searchTerm) => {
-  const client = await pool.connect();
+export const searchAlbums = async (req, res) => {
+  let client = null;
+  const searchTerm = req?.body?.searchTerm;
+  try {
+    client = await pool.connect();
+  } catch (error) {
+    console.log("A client pool error occurred:", error);
+    return error;
+  }
   const query = {
     text: "SELECT * FROM albums WHERE albumname LIKE $1 OR artistname LIKE $1 OR recordlaber LIKE $1",
     values: ["%" + searchTerm + "%"],
   };
   try {
     const response = await client.query(query);
-    return response.rows;
+    res.send(response.rows);
   } catch (err) {
     console.error("Error fetching the albums table", err);
   } finally {

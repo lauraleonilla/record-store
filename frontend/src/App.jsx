@@ -7,10 +7,10 @@ import styled, { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from './assets/globalStyles';
 import { Routes, Route } from 'react-router-dom';
 import Footer from './Footer';
-import MainPage from './MainPage';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import ShoppingCart from './ShoppingCart';
+import Categories from './Categories';
 
 const App = () => {
   return (
@@ -24,6 +24,7 @@ const App = () => {
             <Route path="/records" element={<Catalog />} />
           </Routes>
         </Main>
+        <Categories />
         <ShoppingCart />
         <Footer />
       </StyledApp>

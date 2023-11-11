@@ -1,8 +1,14 @@
 import { pool } from "../../index.js";
 
 export const getCategories = async (req, res) => {
+  let client = null;
   try {
-    const client = await pool.connect();
+    client = await pool.connect();
+  } catch (error) {
+    console.log("A client pool error occurred:", error);
+    return error;
+  }
+  try {
     const query = {
       text: "SELECT * FROM categories;",
     };

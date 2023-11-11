@@ -6,7 +6,7 @@ const SearchField = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const apiUrl = 'http://localhost:3001/search';
+    const apiUrl = 'http://localhost:3001/albums/search';
     const fetchData = async () => {
       try {
         const response = await axios.post(apiUrl, { searchTerm });

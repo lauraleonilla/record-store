@@ -3,8 +3,7 @@ import pkg from "pg";
 import express from "express";
 import dotenv from "dotenv";
 import router from "./src/routes/albumRoutes.js";
-import { getCategories } from "./src/controllers/categoriesController.js";
-import { searchAlbums } from "./src/controllers/albumController.js";
+import mainRouter from "./src/routes/mainRoutes.js";
 
 dotenv.config();
 
@@ -28,18 +27,9 @@ app.use(express.json());
 
 app.use(cors());
 
+app.use("/main", mainRouter);
+
 app.use("/albums", router);
-
-app.post("/search", async (req, res) => {
-  const searchTerm = req?.body?.searchTerm;
-  const response = await searchAlbums(searchTerm);
-  res.send(response);
-});
-
-app.get("/genres", async (req, res) => {
-  const response = await getCategories(req);
-  res.send(response);
-});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

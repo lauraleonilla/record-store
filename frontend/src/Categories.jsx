@@ -6,17 +6,16 @@ const Categories = () => {
   const [genres, setGenres] = useState([]);
 
   useEffect(() => {
-    const apiUrl = 'http://localhost:3001/genres';
-    const fetchGenres = async () => {
+    const apiUrl = 'http://localhost:3001/main/categories';
+    const fetchCategories = async () => {
       try {
         const response = await axios.get(apiUrl);
-        console.log('HEELLOO', response);
         setGenres(response.data);
       } catch (error) {
         console.error('Error: ', error);
       }
     };
-    fetchGenres();
+    fetchCategories();
   }, []);
 
   return (
