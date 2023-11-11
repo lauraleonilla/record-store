@@ -10,6 +10,7 @@ const Categories = () => {
     const fetchGenres = async () => {
       try {
         const response = await axios.get(apiUrl);
+        console.log('HEELLOO', response);
         setGenres(response.data);
       } catch (error) {
         console.error('Error: ', error);

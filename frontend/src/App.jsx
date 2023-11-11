@@ -23,6 +23,7 @@ const App = () => {
             <Route path="/records" element={<Catalog />} />
           </Routes>
         </Main>
+        <MainPage />
         <Footer />
       </StyledApp>
     </ThemeProvider>

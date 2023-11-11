@@ -1,13 +1,10 @@
-import { searchAlbums, getGenres } from "./queries.js";
 import cors from "cors";
 import pkg from "pg";
-import dotenv from "dotenv";
 import express from "express";
-import { searchAlbums } from "./queries.js";
-import cors from "cors";
-import pkg from "pg";
 import dotenv from "dotenv";
 import router from "./src/routes/albumRoutes.js";
+import { getCategories } from "./src/controllers/categoriesController.js";
+import { searchAlbums } from "./src/controllers/albumController.js";
 
 dotenv.config();
 
@@ -35,12 +32,12 @@ app.use("/albums", router);
 
 app.post("/search", async (req, res) => {
   const searchTerm = req?.body?.searchTerm;
-  const response = await searchAlbums(pool, searchTerm);
+  const response = await searchAlbums(searchTerm);
   res.send(response);
 });
 
 app.get("/genres", async (req, res) => {
-  const response = await getGenres(pool);
+  const response = await getCategories(req);
   res.send(response);
 });
 
