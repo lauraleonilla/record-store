@@ -10,6 +10,7 @@ import Footer from './Footer';
 import MainPage from './MainPage';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
+import ShoppingCart from './ShoppingCart';
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
             <Route path="/records" element={<Catalog />} />
           </Routes>
         </Main>
-        <MainPage />
+        <ShoppingCart />
         <Footer />
       </StyledApp>
     </ThemeProvider>
