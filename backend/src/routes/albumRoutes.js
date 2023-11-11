@@ -1,13 +1,16 @@
-import express from 'express';
+import express from "express";
 import {
   getAllAlbums,
   getNewReleases,
-} from '../controllers/albumController.js';
+  searchAlbums,
+} from "../controllers/albumController.js";
 
 const router = express.Router();
 
-router.get('/newreleases', getNewReleases);
+router.get("/newreleases", getNewReleases);
 
-router.get('/all', getAllAlbums);
+router.get("/all", getAllAlbums);
+
+router.post("/search", searchAlbums);
 
 export default router;

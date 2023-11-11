@@ -6,10 +6,14 @@ const SearchField = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const apiUrl = 'http://localhost:3001/search';
+    const apiUrl = 'http://localhost:3001/albums/search';
     const fetchData = async () => {
-      const response = await axios.post(apiUrl, { searchTerm });
-      console.log('Put this in redux or such when in place', response);
+      try {
+        const response = await axios.post(apiUrl, { searchTerm });
+        console.log('Put this in redux or such when in place', response);
+      } catch (error) {
+        console.error('Error: ', error);
+      }
     };
     if (searchTerm && searchTerm.length > 2) {
       fetchData();
