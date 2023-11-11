@@ -23,9 +23,9 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/records" element={<Catalog />} />
           </Routes>
+          <Categories />
+          <ShoppingCart />
         </Main>
-        <Categories />
-        <ShoppingCart />
         <Footer />
       </StyledApp>
     </ThemeProvider>
