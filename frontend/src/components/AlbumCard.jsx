@@ -21,18 +21,24 @@ const CardContainer = styled.div`
   flex-direction: column;
   justify-content: start;
   height: fit-content;
+  max-width: fit-content;
   padding: 0.5rem;
   gap: 0.75rem;
-  background: #aaa;
+  background: ${(props) => props.theme.white};
+  box-shadow: ${(props) => props.theme.shadows.smallAround};
+  border-radius: 3px;
 `;
 
 const AlbumImg = styled.img`
-  height: 160px;
-  width: 160px;
+  height: 10rem;
+  width: 10rem;
   background: white;
+  place-self: center;
 `;
 
-const AlbumName = styled.span``;
+const AlbumName = styled.span`
+  font-weight: bold;
+`;
 const Artist = styled.span``;
 const ProductType = styled.span``;
 const Price = styled.span``;
@@ -41,7 +47,23 @@ const BottomRow = styled.div`
   justify-content: space-between;
 `;
 
-const AddToCartBtn = styled.button``;
+const AddToCartBtn = styled.button`
+  background: ${(props) => props.theme.orange};
+  box-shadow: ${(props) => props.theme.shadows.smallAround};
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 0;
+  border-radius: 3px;
+  font-weight: bold;
+  transition: 50ms ease-out;
+  &:hover {
+    transition: 50ms ease-in;
+    background: ${(props) => props.theme.lightOrange};
+  }
+  &:active {
+    background: ${(props) => props.theme.extraLightOrange};
+  }
+`;
 
 AlbumCard.propTypes = {
   albumName: PropTypes.string.isRequired,
