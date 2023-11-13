@@ -106,6 +106,8 @@ const ShoppingCart = () => {
 };
 
 const ComponentContainer = styled.div`
+  grid-column-start: 3;
+  grid-column-end: 4;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
