@@ -28,13 +28,12 @@ export default function useAlbumData(urlString) {
           }
         });
         if (res.ok) {
-          console.log('success');
           const albumData = await res.json();
           const cards = await createCards(albumData);
           setAlbumCards(cards);
         }
       } catch (err) {
-        console.log('failed to get data');
+        console.log('failed to get data', err);
       }
     }
     getNewReleases();

@@ -34,6 +34,8 @@ const Categories = () => {
 };
 
 const CategoryContainer = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 2;
   background-color: ${(props) => props.theme.lightGrey};
   width: 280px;
   display: flex;

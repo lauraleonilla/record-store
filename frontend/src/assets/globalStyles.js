@@ -5,7 +5,13 @@ export const theme = {
   white: '#FFFFFF',
   black: '#000000',
   grey: '#808080',
-  lightGrey: '#F2F2F2'
+  lightGrey: '#F2F2F2',
+  orange: 'HSL(23, 100%, 65%)',
+  lightOrange: 'HSL(23, 100%, 70%)',
+  extraLightOrange: 'HSL(23, 100%, 85%)',
+  shadows: {
+    smallAround: '#aaa 0 0 3px 1px'
+  }
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -17,3 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     color: ${theme.black};
   }
 `;
+
+export const effects = {
+  softShadow: 'black 0 0 2px 2px'
+};
