@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './App.css';
 import TopBar from './TopBar';
 import BackgroundImage from './assets/albums.jpg';
@@ -9,7 +8,7 @@ import { Routes, Route } from 'react-router-dom';
 import Footer from './Footer';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
-import ShoppingCart from './ShoppingCart';
+import { CartProvider } from './context/Cart/CartContext';
 import Categories from './Categories';
 
 const App = () => {
@@ -18,14 +17,15 @@ const App = () => {
       <StyledApp>
         <GlobalStyle />
         <TopBar />
+        <CartProvider>
         <Main>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/records" element={<Catalog />} />
           </Routes>
           <Categories />
-          <ShoppingCart />
         </Main>
+        </CartProvider>
         <Footer />
       </StyledApp>
     </ThemeProvider>
