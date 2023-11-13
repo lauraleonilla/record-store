@@ -39,7 +39,8 @@ const StyledApp = styled.div`
 `;
 
 const Main = styled.main`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
   justify-content: center;
 `;
 
