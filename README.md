@@ -14,11 +14,10 @@ npm run start
 
 The backend will run on port 3001
 
-For database connection you will need a .env file with the following variables, the values need to be changed to functioning ones.
+For database connection you will need a .env file with the following variable, the value need to be changed to functioning one.
 
 ```
-CONNECTION_STRING="the-connection-string"
-DB_KEY="api-key"
+PGHOST="the-pg-host-key"
 ```
 
 
