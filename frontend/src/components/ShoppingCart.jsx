@@ -1,43 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {  useState, useEffect } from 'react';
+import { useCart } from "../context/Cart/CartContext";
 import styled from 'styled-components';
-import ArrayRight from './assets/arrow-right.png';
-import ArrayLeft from './assets/arrow-left.png';
-import TrashCan from './assets/trash-can.png';
-
-/* ennen mergeä testidatassa käytettyjä. nämä muistiin
-
-const [cart, setCart] = useState([]);
-
-const addToCart = (album) => {
-  const updatedCart = [...cart, album];
-  setCart(updatedCart);
-  const saveCartToLocalStorage = (cart) => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  };
-  saveCartToLocalStorage(updatedCart); 
-};
-
-<ShoppingCart addToCart={addToCart} cart={cart} setCart={setCart} />
-
-<button onClick={() => addToCart(album)}>Lisää ostoskoriin</button>
-
- */
+import ArrayRight from '../assets/arrow-right.png';
+import ArrayLeft from '../assets/arrow-left.png';
+import TrashCan from '../assets/trash-can.png';
 
 const ShoppingCart = () => {
+  const { cart, deleteCartItem, numItemsInCart, calculateTotalPrice} = useCart();
   const [openCartButtonVisible, setOpenCartButtonVisible] = useState(true);
   const [cartVisible, setCartVisible] = useState(false);
-  const [cart, setCart] = useState([]); /* tämä toistaiseksi tässä että toimii */
-
-  const saveCartToLocalStorage = (cart) => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  };
-
-  useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
 
   const openCart = () => {
     setOpenCartButtonVisible(false);
@@ -47,19 +18,6 @@ const ShoppingCart = () => {
   const closeCart = () => {
     setOpenCartButtonVisible(true);
     setCartVisible(false);
-  };
-
-  const numItemsInCart = cart.length;
-
-  const deleteCartItem = (index) => {
-    const updatedCart = cart.filter((_, i) => i !== index);
-    setCart(updatedCart);
-    saveCartToLocalStorage(updatedCart);
-  };
-
-  const calculateTotalPrice = () => {
-    const total = cart.reduce((acc, item) => acc + item.price, 0);
-    return total.toFixed(2);
   };
 
   return (
@@ -76,12 +34,13 @@ const ShoppingCart = () => {
             <CartIconLeft src={ArrayRight} alt="Right Array" />
             Ostoskori {numItemsInCart}
           </CloseCartButton>
-          <CartProducts>
+          
+          <CartProducts> 
             {cart.map((item, index) => (
               <CartProduct key={item}>
                 <ProductInfo>
                   <Album>{item.albumName}</Album>
-                  <Artist>{item.artistName}</Artist>
+                  <Artist>{item.artist}</Artist>
                   <ProductType>{item.productType}</ProductType>
                 </ProductInfo>
                 <Price>{item.price}</Price>
@@ -95,6 +54,7 @@ const ShoppingCart = () => {
               </CartProduct>
             ))}
           </CartProducts>
+          
           <CartFooter>
             <TotalPrice>Yhteensä: {calculateTotalPrice()} </TotalPrice>
             <CheckoutButton>Kassalle</CheckoutButton>
@@ -236,7 +196,7 @@ const DeleteIcon = styled.img`
 const CartFooter = styled.div`
   border-top: 1px solid #000;
   background-color: ${(props) => props.theme.white};
-  padding: 10px; /* Adjust padding as needed */
+  padding: 10px; 
   position: sticky;
   bottom: 0;
   text-align: center;

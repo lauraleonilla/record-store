@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useCart } from '../context/Cart/CartContext';
 
 export default function AlbumCard({ albumName, artist, productType, price }) {
+  const { addToCart } = useCart();
+  const handleAddToCart = () => {
+    const album = { albumName, artist, productType, price };
+    addToCart(album);
+  };
   return (
     <CardContainer>
       <AlbumImg />
@@ -11,7 +17,7 @@ export default function AlbumCard({ albumName, artist, productType, price }) {
         <ProductType>{productType}</ProductType>
         <Price>{price}</Price>
       </BottomRow>
-      <AddToCartBtn>Lisää koriin</AddToCartBtn>
+      <AddToCartBtn onClick={handleAddToCart}>Lisää koriin</AddToCartBtn>
     </CardContainer>
   );
 }
@@ -69,5 +75,5 @@ AlbumCard.propTypes = {
   albumName: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
   productType: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired
+  price: PropTypes.string.isRequired,
 };
