@@ -9,6 +9,8 @@ import Footer from './Footer';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import { CartProvider } from './context/Cart/CartContext';
+import { AllAlbums } from './components/AllAlbums';
+import { AlbumSearch } from './components/AlbumSearch';
 
 const App = () => {
   return (
@@ -19,7 +21,10 @@ const App = () => {
         <CartProvider>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/records" element={<Catalog />} />
+            <Route path="records" element={<Catalog />}>
+              <Route path="all" element={<AllAlbums />} />
+              <Route path="search" element={<AlbumSearch />} />
+            </Route>
           </Routes>
         </CartProvider>
         <Footer />
