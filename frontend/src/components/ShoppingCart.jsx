@@ -1,12 +1,12 @@
-import React, {  useState, useEffect } from 'react';
-import { useCart } from "../context/Cart/CartContext";
+import React, { useState } from 'react';
+import { useCart } from '../context/Cart/CartContext';
 import styled from 'styled-components';
 import ArrayRight from '../assets/arrow-right.png';
 import ArrayLeft from '../assets/arrow-left.png';
 import TrashCan from '../assets/trash-can.png';
 
 const ShoppingCart = () => {
-  const { cart, deleteCartItem, numItemsInCart, calculateTotalPrice} = useCart();
+  const { cart, deleteCartItem, numItemsInCart, calculateTotalPrice } = useCart();
   const [openCartButtonVisible, setOpenCartButtonVisible] = useState(true);
   const [cartVisible, setCartVisible] = useState(false);
 
@@ -34,8 +34,8 @@ const ShoppingCart = () => {
             <CartIconLeft src={ArrayRight} alt="Right Array" />
             Ostoskori {numItemsInCart}
           </CloseCartButton>
-          
-          <CartProducts> 
+
+          <CartProducts>
             {cart.map((item, index) => (
               <CartProduct key={item}>
                 <ProductInfo>
@@ -54,7 +54,7 @@ const ShoppingCart = () => {
               </CartProduct>
             ))}
           </CartProducts>
-          
+
           <CartFooter>
             <TotalPrice>Yhteensä: {calculateTotalPrice()} </TotalPrice>
             <CheckoutButton>Kassalle</CheckoutButton>
@@ -66,8 +66,6 @@ const ShoppingCart = () => {
 };
 
 const ComponentContainer = styled.div`
-  grid-column-start: 3;
-  grid-column-end: 4;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -196,7 +194,7 @@ const DeleteIcon = styled.img`
 const CartFooter = styled.div`
   border-top: 1px solid #000;
   background-color: ${(props) => props.theme.white};
-  padding: 10px; 
+  padding: 10px;
   position: sticky;
   bottom: 0;
   text-align: center;

@@ -30,7 +30,6 @@ export const CartProvider = ({ children }) => {
     const total = cart.reduce((acc, item) => acc + parseFloat(item.price.replace('$', '')), 0);
     return total.toFixed(2);
   };
-  
 
   const addToCart = (album) => {
     const updatedCart = [...cart, album];
@@ -45,7 +44,8 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, deleteCartItem, numItemsInCart, calculateTotalPrice }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, deleteCartItem, numItemsInCart, calculateTotalPrice }}>
       {children}
     </CartContext.Provider>
   );
