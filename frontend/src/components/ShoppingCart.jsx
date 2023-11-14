@@ -66,18 +66,14 @@ const ShoppingCart = () => {
 };
 
 const ComponentContainer = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  position: relative;
+  position: absolute;
+  right: 0;
 `;
 
 const OpenCartButton = styled.button`
-  background-color: #f2f2f2;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
-  outline: none;
   display: flex;
   align-items: center;
 `;
@@ -89,7 +85,7 @@ const CartIconRight = styled.img`
 `;
 
 const CartContainer = styled.div`
-  background-color: #f2f2f2;
+  background-color: ${(props) => props.theme.lightGrey};
   width: 362px;
   height: 600px;
   display: flex;
@@ -97,7 +93,6 @@ const CartContainer = styled.div`
 `;
 
 const CloseCartButton = styled.button`
-  background-color: transparent;
   margin: 0 0 20px 10px;
   padding: 10px;
   border: none;
@@ -137,14 +132,9 @@ const CartProduct = styled.div`
   background-color: ${(props) => props.theme.white};
   width: 85%;
   border-radius: 5px;
-  margin-left: auto;
-  margin-right: auto;
-  list-style: none;
-  justify-content: space-between;
-  align-items: center;
+  margin: 0 auto 10px auto;
   padding: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin-bottom: 10px;
 `;
 
 const ProductInfo = styled.div`
@@ -168,35 +158,29 @@ const ProductType = styled.div`
 
 const Price = styled.div`
   font-weight: bold;
-  flex: 0.4;
   align-self: flex-end;
   margin-right: 15px;
 `;
 
 const DeleteIconHolder = styled.div`
   display: flex;
-  align-self: center;
   height: 70px;
-  border-left: 1px solid #000;
+  border-left: 1px solid ${(props) => props.theme.black};
   padding: 0 5px;
 `;
 
 const DeleteIcon = styled.img`
-  display: flex;
   align-self: center;
   width: 20px;
   height: 20px;
-  padding: 5px;
   cursor: pointer;
   margin-left: 5px;
 `;
 
 const CartFooter = styled.div`
-  border-top: 1px solid #000;
+  border-top: 1px solid ${(props) => props.theme.black};
   background-color: ${(props) => props.theme.white};
   padding: 10px;
-  position: sticky;
-  bottom: 0;
   text-align: center;
 `;
 
@@ -206,12 +190,12 @@ const TotalPrice = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 10px;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid ${(props) => props.theme.black};
 `;
 
 const CheckoutButton = styled.button`
-  background-color: #ff934f;
-  color: #000;
+  background-color: ${(props) => props.theme.orange};
+  color: ${(props) => props.theme.black};
   width: 95%;
   font-weight: bold;
   border-radius: 5px;
