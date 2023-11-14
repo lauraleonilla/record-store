@@ -75,5 +75,5 @@ AlbumCard.propTypes = {
   albumName: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
   productType: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired
 };

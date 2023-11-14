@@ -9,7 +9,6 @@ import Footer from './Footer';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import { CartProvider } from './context/Cart/CartContext';
-import Categories from './Categories';
 
 const App = () => {
   return (
@@ -18,13 +17,10 @@ const App = () => {
         <GlobalStyle />
         <TopBar />
         <CartProvider>
-        <Main>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/records" element={<Catalog />} />
           </Routes>
-          <Categories />
-        </Main>
         </CartProvider>
         <Footer />
       </StyledApp>
@@ -36,12 +32,6 @@ const StyledApp = styled.div`
   background-image: url(${BackgroundImage});
   background-size: cover;
   background-attachment: fixed;
-`;
-
-const Main = styled.main`
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  justify-content: center;
 `;
 
 export default App;
