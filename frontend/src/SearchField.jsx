@@ -1,29 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { SearchContext } from './context/AlbumSearchContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const SearchField = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
+  const { updateResults } = useContext(SearchContext);
   useEffect(() => {
     const apiUrl = 'http://localhost:3001/albums/search';
     const fetchData = async () => {
       try {
         const response = await axios.post(apiUrl, { searchTerm });
-        console.log('Put this in redux or such when in place', response);
+        updateResults(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error('Error: ', error);
       }
     };
-    if (searchTerm && searchTerm.length > 2) {
+    if (searchTerm && searchTerm.length > 0) {
       fetchData();
     }
   }, [searchTerm]);
 
+  function handleSearch(e) {
+    if (e.key === 'Enter' && !window.location.pathname.endsWith('records/search')) {
+      navigate('/records/search');
+    }
+  }
+
   return (
     <StyledSearchField
       onChange={(e) => setSearchTerm(e.target.value)}
-      placeholder="Hae artistia tai albumia..."
+      onKeyDown={(e) => handleSearch(e)}
+      placeholder="Hae artistia tai albumia. Hae painamalla 'Enter'"
     />
   );
 };

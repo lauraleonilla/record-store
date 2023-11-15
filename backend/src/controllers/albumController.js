@@ -42,7 +42,7 @@ export const searchAlbums = async (req, res) => {
     return error;
   }
   const query = {
-    text: 'SELECT * FROM albums WHERE albumname LIKE $1 OR artistname LIKE $1 OR recordlaber LIKE $1',
+    text: 'SELECT * FROM albums WHERE albumName ILIKE $1 OR artistname ILIKE $1 OR recordlaber LIKE $1',
     values: ['%' + searchTerm + '%'],
   };
   try {
