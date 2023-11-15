@@ -1,3 +1,15 @@
+import { useContext } from 'react';
+import { SearchContext } from '../context/AlbumSearchContext';
+import { AlbumContainer } from './AlbumContainer';
+import { createCards } from '../hooks/useAlbumData';
+
 export function AlbumSearch() {
-  return <div></div>;
+  const { searchResults } = useContext(SearchContext);
+
+  let result = '';
+  searchResults[0]
+    ? (result = createCards(searchResults))
+    : (result = 'Haulla ei löytynyt tuloksia.');
+
+  return <AlbumContainer>{result}</AlbumContainer>;
 }

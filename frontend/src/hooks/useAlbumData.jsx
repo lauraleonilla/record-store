@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AlbumCard from '../components/AlbumCard';
 
-function createCards(albumData) {
+export function createCards(albumData) {
   const cards = albumData.map(({ albumname, artistname, producttype, price } = albumData, i) => {
     return (
       <AlbumCard
