@@ -12,23 +12,26 @@ import { CartProvider } from './context/Cart/CartContext';
 import { AllAlbums } from './components/AllAlbums';
 import { AlbumSearch } from './components/AlbumSearch';
 import { Checkout } from './components/Checkout';
+import { SearchProvider } from './context/AlbumSearchContext';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <StyledApp>
         <GlobalStyle />
-        <TopBar />
-        <CartProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="records" element={<Catalog />}>
-              <Route path="all" element={<AllAlbums />} />
-              <Route path="search" element={<AlbumSearch />} />
-            </Route>
-            <Route path="checkout" element={<Checkout />} />
-          </Routes>
-        </CartProvider>
+        <SearchProvider>
+          <TopBar />
+          <CartProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="records" element={<Catalog />}>
+                <Route path="all" element={<AllAlbums />} />
+                <Route path="search" element={<AlbumSearch />} />
+                <Route path="checkout" element={<Checkout />} />
+              </Route>
+            </Routes>
+          </CartProvider>
+        </SearchProvider>
         <Footer />
       </StyledApp>
     </ThemeProvider>
