@@ -27,8 +27,8 @@ const App = () => {
               <Route path="records" element={<Catalog />}>
                 <Route path="all" element={<AllAlbums />} />
                 <Route path="search" element={<AlbumSearch />} />
-                <Route path="checkout" element={<Checkout />} />
               </Route>
+              <Route path="checkout" element={<Checkout />} />
             </Routes>
           </CartProvider>
         </SearchProvider>
