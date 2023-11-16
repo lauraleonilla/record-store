@@ -11,6 +11,7 @@ import Catalog from './pages/Catalog';
 import { CartProvider } from './context/Cart/CartContext';
 import { AllAlbums } from './components/AllAlbums';
 import { AlbumSearch } from './components/AlbumSearch';
+import { Checkout } from './components/Checkout';
 import { SearchProvider } from './context/AlbumSearchContext';
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
                 <Route path="all" element={<AllAlbums />} />
                 <Route path="search" element={<AlbumSearch />} />
               </Route>
+              <Route path="checkout" element={<Checkout />} />
             </Routes>
           </CartProvider>
         </SearchProvider>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useCart } from '../context/Cart/CartContext';
 import styled from 'styled-components';
 import ArrayRight from '../assets/arrow-right.png';
@@ -57,7 +58,9 @@ const ShoppingCart = () => {
 
           <CartFooter>
             <TotalPrice>Yhteensä: {calculateTotalPrice()} </TotalPrice>
-            <CheckoutButton>Kassalle</CheckoutButton>
+            <Link to="/checkout">
+              <CheckoutButton>Kassalle</CheckoutButton>
+            </Link>
           </CartFooter>
         </CartContainer>
       )}
