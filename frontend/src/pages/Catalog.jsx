@@ -1,16 +1,12 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+// import useAlbumData from '../hooks/useAlbumData';
+// import { AlbumContainer } from '../components/AlbumContainer';
+// import { Outlet } from 'react-router-dom';
 
-import ShoppingCart from '../components/ShoppingCart';
-import Categories from '../Categories';
-import { MainContent } from '../components/MainContent';
-
-export default function Catalog() {
-  return (
-    <MainContent>
-      <Categories />
-      <Outlet />
-      <ShoppingCart />
-    </MainContent>
-  );
-}
+// export function Catalog() {
+//   const albumCards = useAlbumData('all');
+//   if (window.location.pathname.endsWith('/records')) {
+//     return <AlbumContainer>{albumCards}</AlbumContainer>;
+//   } else {
+//     return <Outlet />;
+//   }
+// }

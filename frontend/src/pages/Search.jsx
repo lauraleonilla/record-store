@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SearchContext } from '../context/AlbumSearchContext';
-import { AlbumContainer } from './AlbumContainer';
+import { AlbumContainer } from '../components/AlbumContainer';
 import { createCards } from '../hooks/useAlbumData';
 
 export function AlbumSearch() {
-  const { searchResults } = useContext(SearchContext);
+  const { searchResults, logResults } = useContext(SearchContext);
+
+  useEffect(() => {
+    logResults;
+  }, []);
 
   let result = '';
   searchResults[0]
