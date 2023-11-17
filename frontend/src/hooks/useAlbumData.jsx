@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import AlbumCard from '../components/AlbumCard';
+import { PaginationContext } from '../context/PaginationContext';
 
 export function createCards(albumData) {
   const cards = albumData.map(({ albumname, artistname, producttype, price } = albumData, i) => {
@@ -15,29 +16,33 @@ export function createCards(albumData) {
   });
   return cards;
 }
-export default function useAlbumData(urlString) {
+export default function useAlbumData(urlString, pageIndex) {
   const [albumCards, setAlbumCards] = useState();
+  const { itemsPerPage, updateItemCount } = useContext(PaginationContext);
+  const itemIndex = itemsPerPage * (pageIndex - 1);
 
   useEffect(() => {
-    async function getNewReleases() {
+    async function getAlbumData() {
       try {
         const res = await fetch(`http://localhost:3001/albums/${urlString}`, {
-          method: 'GET',
+          method: 'POST',
           headers: {
             'content-type': 'application/json'
-          }
+          },
+          body: JSON.stringify({ itemIndex: itemIndex, itemsPerPage: itemsPerPage })
         });
         if (res.ok) {
-          const albumData = await res.json();
-          const cards = await createCards(albumData);
+          const data = await res.json();
+          const cards = await createCards(data.albumData);
+          updateItemCount(data.itemCount);
           setAlbumCards(cards);
         }
       } catch (err) {
-        console.log('failed to get data', err);
+        console.log('failed to get data: ', err);
       }
     }
-    getNewReleases();
-  }, [urlString]);
+    getAlbumData();
+  }, [urlString, pageIndex]);
 
   return albumCards;
 }

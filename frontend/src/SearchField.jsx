@@ -12,22 +12,27 @@ const SearchField = () => {
   useEffect(() => {
     const apiUrl = 'http://localhost:3001/albums/search';
     const fetchData = async () => {
+      let trimmedSearchTerm = searchTerm.replace(/\s+/g, ' ').trim();
       try {
-        const response = await axios.post(apiUrl, { searchTerm });
+        const response = await axios.post(apiUrl, { trimmedSearchTerm });
         updateResults(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error('Error: ', error);
       }
     };
-    if (searchTerm && searchTerm.length > 0) {
-      fetchData();
+    if (searchTerm && searchTerm.length > 1) {
+      const debounce = setTimeout(() => {
+        fetchData();
+      }, 1000);
+      return () => clearTimeout(debounce);
+    } else {
+      updateResults('');
     }
   }, [searchTerm]);
 
   function handleSearch(e) {
-    if (e.key === 'Enter' && !window.location.pathname.endsWith('records/search')) {
-      navigate('/records/search');
+    if (e.key === 'Enter' && !window.location.pathname.endsWith('/search')) {
+      navigate('/search');
     }
   }
 

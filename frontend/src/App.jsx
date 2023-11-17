@@ -7,12 +7,13 @@ import { GlobalStyle, theme } from './assets/globalStyles';
 import { Routes, Route } from 'react-router-dom';
 import Footer from './Footer';
 import Home from './pages/Home';
-import Catalog from './pages/Catalog';
 import { CartProvider } from './context/Cart/CartContext';
-import { AllAlbums } from './components/AllAlbums';
-import { AlbumSearch } from './components/AlbumSearch';
+import { CatalogPage } from './pages/CatalogPage';
+import { AlbumSearch } from './pages/Search';
 import { Checkout } from './components/Checkout';
 import { SearchProvider } from './context/AlbumSearchContext';
+import RecordsLayout from './components/RecordsLayout';
+// import { BodyWrapper } from './components/BodyWrapper,';
 
 const App = () => {
   return (
@@ -22,14 +23,18 @@ const App = () => {
         <SearchProvider>
           <TopBar />
           <CartProvider>
+            {/* <BodyWrapper> */}
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="records" element={<Catalog />}>
-                <Route path="all" element={<AllAlbums />} />
+              <Route element={<RecordsLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="records">
+                  <Route path=":page" element={<CatalogPage />} />
+                </Route>
                 <Route path="search" element={<AlbumSearch />} />
               </Route>
               <Route path="checkout" element={<Checkout />} />
             </Routes>
+            {/* </BodyWrapper> */}
           </CartProvider>
         </SearchProvider>
         <Footer />
@@ -42,6 +47,7 @@ const StyledApp = styled.div`
   background-image: url(${BackgroundImage});
   background-size: cover;
   background-attachment: fixed;
+  height: fit-content;
 `;
 
 export default App;

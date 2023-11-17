@@ -9,7 +9,7 @@ const TopBar = () => {
       <LogoText>LEVYKAUPPA-Y</LogoText>
       <GreenBar>
         <HeaderNavLink to="/">ETUSIVU</HeaderNavLink>
-        <HeaderNavLink to="/records/all">LEVYT</HeaderNavLink>
+        <HeaderNavLink to="/records/1">LEVYT</HeaderNavLink>
       </GreenBar>
       <WhiteBar>
         <SearchField />

@@ -27,9 +27,9 @@ const CardContainer = styled.div`
   flex-direction: column;
   justify-content: start;
   height: fit-content;
-  max-width: fit-content;
+  min-width: 13rem;
   padding: 0.5rem;
-  gap: 0.75rem;
+  gap: 0.5rem;
   background: ${(props) => props.theme.white};
   box-shadow: ${(props) => props.theme.shadows.smallAround};
   border-radius: 3px;
@@ -38,14 +38,19 @@ const CardContainer = styled.div`
 const AlbumImg = styled.img`
   height: 10rem;
   width: 10rem;
+  margin-bottom: 0.5rem;
   background: white;
   place-self: center;
 `;
 
 const AlbumName = styled.span`
+  min-height: 2rem;
   font-weight: bold;
 `;
-const Artist = styled.span``;
+const Artist = styled.span`
+  font-size: 0.9rem;
+  height: 2rem;
+`;
 const ProductType = styled.span``;
 const Price = styled.span``;
 const BottomRow = styled.div`
