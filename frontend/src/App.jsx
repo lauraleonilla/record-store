@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import { CartProvider } from './context/Cart/CartContext';
 import { CatalogPage } from './pages/CatalogPage';
 import { AlbumSearch } from './pages/Search';
+import { Checkout } from './components/Checkout';
 import { SearchProvider } from './context/AlbumSearchContext';
 import RecordsLayout from './components/RecordsLayout';
 // import { BodyWrapper } from './components/BodyWrapper,';
@@ -31,6 +32,7 @@ const App = () => {
                 </Route>
                 <Route path="search" element={<AlbumSearch />} />
               </Route>
+              <Route path="checkout" element={<Checkout />} />
             </Routes>
             {/* </BodyWrapper> */}
           </CartProvider>
