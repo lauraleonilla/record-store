@@ -20,11 +20,19 @@ export async function getNewReleases(req, res) {
 
 export async function getAllAlbums(req, res) {
   const client = await pool.connect();
+  const { itemIndex, itemsPerPage } = req.body;
   try {
-    const data = await client.query(
-      'SELECT albumName, artistName, productType, price FROM albums'
-    );
-    res.send(JSON.stringify(data.rows)).status(200);
+    const query = {
+      text: 'SELECT albumName, artistName,productType, price FROM albums WHERE albumId > $1 LIMIT $2',
+      values: [itemIndex, itemsPerPage],
+    };
+    const count = await client.query('SELECT COUNT(*) FROM albums');
+    const countNum = count.rows[0].count;
+    const data = await client.query(query);
+    const albumData = data.rows;
+    res
+      .send(JSON.stringify({ itemCount: countNum, albumData: albumData }))
+      .status(200);
   } catch (err) {
     console.log(err);
   } finally {
@@ -34,7 +42,7 @@ export async function getAllAlbums(req, res) {
 
 export const searchAlbums = async (req, res) => {
   let client = null;
-  const searchTerm = req?.body?.searchTerm;
+  const searchTerm = req?.body?.trimmedSearchTerm;
   try {
     client = await pool.connect();
   } catch (error) {
@@ -42,7 +50,7 @@ export const searchAlbums = async (req, res) => {
     return error;
   }
   const query = {
-    text: 'SELECT * FROM albums WHERE albumName ILIKE $1 OR artistname ILIKE $1 OR recordlaber LIKE $1',
+    text: 'SELECT * FROM albums WHERE albumName ILIKE $1 OR artistname ILIKE $1 OR recordlabel LIKE $1',
     values: ['%' + searchTerm + '%'],
   };
   try {

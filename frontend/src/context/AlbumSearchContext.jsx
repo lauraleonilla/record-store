@@ -1,9 +1,9 @@
-import { createContext, useState, useMemo } from 'react';
+import { createContext, useState } from 'react';
 
 export const SearchContext = createContext();
 
 export function SearchProvider({ children }) {
-  const [searchResults, setSearchResults] = useState();
+  const [searchResults, setSearchResults] = useState('');
 
   function updateResults(searchData) {
     setSearchResults(searchData);
