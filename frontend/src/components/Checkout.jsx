@@ -1,89 +1,122 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Header2, StandardBold, Standard } from '../assets/globalStyles';
 import { Button } from './Button';
+import { validateFormValues } from '../utils';
 
 export const Checkout = () => {
   const [deliveryMethod, setDeliveryMethod] = useState();
-  const [form, setForm] = useState({
+  const [inputFields, setInputFields] = useState({
     firstName: '',
     lastName: '',
-    email: ''
+    email: '',
+    phoneNumber: '',
+    deliveryMethod: '',
+    address: '',
+    postalCode: '',
+    city: ''
   });
+  const [errors, setErrors] = useState({});
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    const initialErrors = validateFormValues(inputFields);
+    setErrors(initialErrors);
+  }, []);
 
   const onDeliveryMethodSelect = (e) => {
     setDeliveryMethod(e.target.value);
+    handleChange(e);
   };
 
-  const onUpdateField = (e) => {
-    const nextFormState = {
-      ...form,
-      [e.target.name]: e.target.value
-    };
-    setForm(nextFormState);
+  const handleChange = (e) => {
+    setInputFields({ ...inputFields, [e.target.name]: e.target.value });
+    setErrors(validateFormValues(inputFields));
+    if (!Object.values(errors).length) {
+      setButtonDisabled(false);
+    }
   };
 
-  const sendOrder = () => {
-    console.log('HELLOOO');
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('handleSubmit', errors);
   };
 
   return (
     <CheckoutContainer>
-      <InnerContainer>
-        <HeaderContainer>
-          <Header2>Täytä tilauksen tiedot</Header2>
-          <Standard>Tähdellä merkityt kentät ovat pakollisia</Standard>
-        </HeaderContainer>
-        <StandardBold>Valitse toimitustapa</StandardBold>
-        <RadioButtonContainer>
-          <input
-            type="radio"
-            value="homeDelivery"
-            name="delivery"
-            onChange={onDeliveryMethodSelect}
-          />
-          <Standard>Kotiinkuljetus</Standard>
-        </RadioButtonContainer>
-        <RadioButtonContainer>
-          <input type="radio" value="pickUp" name="delivery" onChange={onDeliveryMethodSelect} />
-          <Standard>Nouto myymälästä</Standard>
-        </RadioButtonContainer>
-        <StandardBold>Henkilötiedot</StandardBold>
-        <InputContainer>
-          <p>Etunimi*</p>
-          <CheckoutInput value={form.firstName} onChange={onUpdateField} />
-        </InputContainer>
-        <InputContainer>
-          <p>Sukunimi*</p>
-          <CheckoutInput value={form.lastName} onChange={onUpdateField} />
-        </InputContainer>
-        <InputContainer>
-          <p>Sähköposti*</p>
-          <CheckoutInput value={form.email} onChange={onUpdateField} />
-        </InputContainer>
-        <InputContainer>
-          <p>Puhelinnumero</p>
-          <CheckoutInput />
-        </InputContainer>
-        {deliveryMethod === 'homeDelivery' ? (
-          <AddressContainer>
-            <StandardBold>Toimitusosoite</StandardBold>
-            <InputContainer>
-              <p>Katuosoite*</p>
-              <CheckoutInput />
-            </InputContainer>
-            <InputContainer>
-              <p>Postinumero*</p>
-              <CheckoutInput />
-            </InputContainer>
-            <InputContainer>
-              <p>Toimipaikka*</p>
-              <CheckoutInput />
-            </InputContainer>
-          </AddressContainer>
-        ) : null}
-      </InnerContainer>
-      <Button disabled={true} text={'Lähetä tilaus'} onClick={sendOrder} />
+      <form onSubmit={handleSubmit}>
+        <InnerContainer>
+          <HeaderContainer>
+            <Header2>Täytä tilauksen tiedot</Header2>
+            <Standard>Tähdellä merkityt kentät ovat pakollisia</Standard>
+          </HeaderContainer>
+          <StandardBold>Valitse toimitustapa</StandardBold>
+          <RadioButtonContainer>
+            <input
+              type="radio"
+              value="homeDelivery"
+              name="deliveryMethod"
+              onChange={onDeliveryMethodSelect}
+            />
+            <Standard>Kotiinkuljetus</Standard>
+          </RadioButtonContainer>
+          <RadioButtonContainer>
+            <input
+              type="radio"
+              value="pickUp"
+              name="deliveryMethod"
+              onChange={onDeliveryMethodSelect}
+            />
+            <Standard>Nouto myymälästä</Standard>
+          </RadioButtonContainer>
+          <StandardBold>Henkilötiedot</StandardBold>
+          <InputContainer>
+            <p>Etunimi*</p>
+            <CheckoutInput value={inputFields.firstName} onChange={handleChange} name="firstName" />
+          </InputContainer>
+          <InputContainer>
+            <p>Sukunimi*</p>
+            <CheckoutInput value={inputFields.lastName} onChange={handleChange} name="lastName" />
+          </InputContainer>
+          <InputContainer>
+            <p>Sähköposti*</p>
+            <CheckoutInput value={inputFields.email} onChange={handleChange} name="email" />
+          </InputContainer>
+          <InputContainer>
+            <p>Puhelinnumero</p>
+            <CheckoutInput
+              value={inputFields.phoneNumber}
+              onChange={handleChange}
+              name="phoneNumber"
+            />
+          </InputContainer>
+          {deliveryMethod === 'homeDelivery' ? (
+            <AddressContainer>
+              <StandardBold>Toimitusosoite</StandardBold>
+              <InputContainer>
+                <p>Katuosoite*</p>
+                <CheckoutInput value={inputFields.address} onChange={handleChange} name="address" />
+              </InputContainer>
+              <InputContainer>
+                <p>Postinumero*</p>
+                <CheckoutInput
+                  value={inputFields.postalCode}
+                  onChange={handleChange}
+                  name="postalCode"
+                />
+              </InputContainer>
+              <InputContainer>
+                <p>Toimipaikka*</p>
+                <CheckoutInput value={inputFields.city} onChange={handleChange} name="city" />
+              </InputContainer>
+            </AddressContainer>
+          ) : null}
+        </InnerContainer>
+        <Button disabled={buttonDisabled} text={'Lähetä tilaus'} type="submit" />
+        {Object.values(errors).map((err) => (
+          <p key={err}>{err}</p>
+        ))}
+      </form>
     </CheckoutContainer>
   );
 };
