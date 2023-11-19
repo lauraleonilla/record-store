@@ -38,7 +38,7 @@ const ShoppingCart = () => {
 
           <CartProducts>
             {cart.map((item, index) => (
-              <CartProduct key={item}>
+              <CartProduct key={index}>
                 <ProductInfo>
                   <Album>{item.albumName}</Album>
                   <Artist>{item.artist}</Artist>
