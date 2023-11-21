@@ -16,5 +16,4 @@ router.post('/search', searchAlbums);
 
 router.get('/:genre', getAlbumsByGenre);
 
-
 export default router;
