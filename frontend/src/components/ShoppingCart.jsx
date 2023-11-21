@@ -38,12 +38,10 @@ const ShoppingCart = () => {
 
           <CartProducts>
             {cart.map((item, index) => (
-              <CartProduct key={item}>
-                <ProductInfo>
-                  <Album>{item.albumName}</Album>
-                  <Artist>{item.artist}</Artist>
-                  <ProductType>{item.productType}</ProductType>
-                </ProductInfo>
+              <CartProduct key={index}>
+                <Album>{item.albumName}</Album>
+                <Artist>{item.artist}</Artist>
+                <ProductType>{item.productType}</ProductType>
                 <Price>{item.price}</Price>
                 <DeleteIconHolder>
                   <DeleteIcon
@@ -58,9 +56,8 @@ const ShoppingCart = () => {
 
           <CartFooter>
             <TotalPrice>Yhteensä: {calculateTotalPrice()} </TotalPrice>
-            <Link to="/checkout">
-              <CheckoutButton>Kassalle</CheckoutButton>
-            </Link>
+
+            <CheckoutLink to="/checkout">Kassalle</CheckoutLink>
           </CartFooter>
         </CartContainer>
       )}
@@ -69,8 +66,12 @@ const ShoppingCart = () => {
 };
 
 const ComponentContainer = styled.div`
-  position: absolute;
-  right: 0;
+  display: flex;
+  position: sticky;
+  top: 7.75rem;
+  transform: translateX(2rem);
+  justify-self: end;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundDark};
 `;
 
 const OpenCartButton = styled.button`
@@ -88,16 +89,13 @@ const CartIconRight = styled.img`
 `;
 
 const CartContainer = styled.div`
-  background-color: ${(props) => props.theme.lightGrey};
-  width: 362px;
-  height: 600px;
+  background-color: ${(props) => props.theme.white};
+  max-height: 60svh;
   display: flex;
   flex-direction: column;
 `;
-
 const CloseCartButton = styled.button`
-  margin: 0 0 20px 10px;
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
   cursor: pointer;
   display: flex;
@@ -105,8 +103,14 @@ const CloseCartButton = styled.button`
 `;
 
 const CartProducts = styled.div`
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  gap: 0.75rem;
   overflow-y: auto;
+  padding: 1rem;
+
+  overscroll-behavior: contain;
 
   /* Hide scrollbar different browsers  */
   &::-webkit-scrollbar {
@@ -131,43 +135,46 @@ const CartIconLeft = styled.img`
 `;
 
 const CartProduct = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
   background-color: ${(props) => props.theme.white};
-  width: 85%;
+  min-width: fit-content;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  padding: 0.75rem;
   border-radius: 5px;
-  margin: 0 auto 10px auto;
-  padding: 10px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-`;
-
-const ProductInfo = styled.div`
-  flex: 1;
-  align-self: center;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
 `;
 
 const Album = styled.div`
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
   font-weight: bold;
-  margin-bottom: 0.2rem;
 `;
 
 const Artist = styled.div`
+  grid-column: 1/3;
+  grid-row: 2/3;
   font-weight: normal;
-  margin-bottom: 0.2rem;
 `;
 
 const ProductType = styled.div`
+  grid-column: 1/2;
+  grid-row: 3/4;
   font-weight: normal;
 `;
 
 const Price = styled.div`
+  grid-column: 2/3;
+  grid-row: 3/4;
   font-weight: bold;
-  align-self: flex-end;
-  margin-right: 15px;
 `;
 
 const DeleteIconHolder = styled.div`
+  grid-column: 3/4;
+  grid-row: 1/4;
+  justify-content: center;
   display: flex;
-  height: 70px;
   border-left: 1px solid ${(props) => props.theme.black};
   padding: 0 5px;
 `;
@@ -177,35 +184,39 @@ const DeleteIcon = styled.img`
   width: 20px;
   height: 20px;
   cursor: pointer;
-  margin-left: 5px;
+  margin-left: 0.5rem;
 `;
 
 const CartFooter = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border-top: 1px solid ${(props) => props.theme.black};
   background-color: ${(props) => props.theme.white};
-  padding: 10px;
   text-align: center;
+  border-radius: 0 0 0 5px;
 `;
 
 const TotalPrice = styled.div`
+  width: 100%;
   font-weight: bold;
-  width: 95%;
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 10px;
+  padding: 10px 0;
   border-bottom: 1px solid ${(props) => props.theme.black};
 `;
 
-const CheckoutButton = styled.button`
+const CheckoutLink = styled(Link)`
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
   background-color: ${(props) => props.theme.orange};
-  color: ${(props) => props.theme.black};
-  width: 95%;
-  font-weight: bold;
-  border-radius: 5px;
   border: none;
-  padding: 10px 20px;
+  margin: 1rem;
   cursor: pointer;
-  margin: 10px auto;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
 `;
 
 export default ShoppingCart;

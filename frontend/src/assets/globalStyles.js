@@ -1,8 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components';
 
+// green: '#8CC084',
+// cadetGrey: '#97ABB1',
+
 export const theme = {
-  green: '#8CC084',
+  ashGrey: '#85A4C7',
   white: '#FFFFFF',
   black: '#000000',
   grey: '#808080',
@@ -12,7 +15,9 @@ export const theme = {
   lightOrange: 'HSL(23, 100%, 70%)',
   extraLightOrange: 'HSL(23, 100%, 85%)',
   shadows: {
-    smallAround: '#aaa 0 0 3px 1px'
+    smallAroundLight: '#aaa 0px 0px 10px 1px',
+    smallAroundDark: '#555 0px 0px 10px 1px',
+    smallBottom: '#444 0px 3px 15px 0px'
   }
 };
 
@@ -33,14 +38,10 @@ export const Standard = styled.p`
 
 export const GlobalStyle = createGlobalStyle`
 * {
-    font-family: Roboto Flex;
+    font-family: Lato;
     font-weight: normal;
     font-style: normal;
     font-size: 16px;
     color: ${theme.black};
   }
 `;
-
-export const effects = {
-  softShadow: 'black 0 0 2px 2px'
-};

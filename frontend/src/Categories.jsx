@@ -34,22 +34,24 @@ const Categories = () => {
 };
 
 const CategoryContainer = styled.div`
+  position: sticky;
+  top: 7.75rem;
   grid-column-start: 1;
   grid-column-end: 2;
   justify-self: end;
-  background-color: ${(props) => props.theme.lightGrey};
-  width: 280px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  padding: 0.5rem;
+  background-color: ${(props) => props.theme.lightGrey};
+  box-shadow: ${(props) => props.theme.shadows.smallAroundDark};
 `;
 
 const CategoryCard = styled.div`
   background-color: ${(props) => props.theme.white};
-  height: 40px;
-  width: 250px;
+  height: 2.5rem;
+  width: 15rem;
   display: flex;
   justify-content: center;
   align-items: center;

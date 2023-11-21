@@ -21,6 +21,9 @@ const App = () => {
       <StyledApp>
         <GlobalStyle />
         <SearchProvider>
+          <Header>
+            <LogoText>LEVYKAUPPA-Y</LogoText>
+          </Header>
           <TopBar />
           <CartProvider>
             {/* <BodyWrapper> */}
@@ -48,6 +51,20 @@ const StyledApp = styled.div`
   background-size: cover;
   background-attachment: fixed;
   height: fit-content;
+`;
+
+const Header = styled.div`
+  background: RGBA(25, 25, 35, 75%);
+  z-index: 1;
+`;
+
+const LogoText = styled.h1`
+  color: ${(props) => props.theme.ashGrey};
+  margin-bottom: -18px;
+  font-size: 4rem;
+  font-weight: 900;
+  margin-top: -12px;
+  margin-left: 0.5rem;
 `;
 
 export default App;

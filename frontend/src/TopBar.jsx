@@ -6,7 +6,6 @@ import SearchField from './SearchField';
 const TopBar = () => {
   return (
     <Container>
-      <LogoText>LEVYKAUPPA-Y</LogoText>
       <GreenBar>
         <HeaderNavLink to="/">ETUSIVU</HeaderNavLink>
         <HeaderNavLink to="/records/1">LEVYT</HeaderNavLink>
@@ -18,33 +17,31 @@ const TopBar = () => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  box-shadow: ${(props) => props.theme.shadows.smallBottom};
+  position: sticky;
+  top: 0;
+`;
 
+// height: 50px;
 const WhiteBar = styled.div`
-  background-color: ${(props) => props.theme.white};
-  height: 50px;
+  background-color: ${(props) => props.theme.lightGrey};
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0.5rem;
 `;
+// height: 50px;
 const GreenBar = styled.div`
-  background-color: ${(props) => props.theme.green};
-  height: 50px;
+  background-color: ${(props) => props.theme.ashGrey};
   display: flex;
   align-items: center;
+  padding: 0.75rem;
 `;
 
 const HeaderNavLink = styled(NavLink)`
   text-decoration: none;
   margin: 0px 20px;
-`;
-
-const LogoText = styled.h1`
-  color: ${(props) => props.theme.green};
-  font-size: 64px;
-  font-weight: 900;
-  margin-bottom: -15px;
-  margin-top: 0px;
 `;
 
 export default TopBar;

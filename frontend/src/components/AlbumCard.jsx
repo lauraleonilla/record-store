@@ -10,13 +10,15 @@ export default function AlbumCard({ albumName, artist, productType, price }) {
   };
   return (
     <CardContainer>
-      <AlbumImg />
-      <AlbumName>{albumName}</AlbumName>
-      <Artist>{artist}</Artist>
-      <BottomRow>
-        <ProductType>{productType}</ProductType>
-        <Price>{price}</Price>
-      </BottomRow>
+      <AlbumImg src="https://placehold.co/208x208" />
+      <AlbumInfo>
+        <AlbumName>{albumName}</AlbumName>
+        <Artist>{artist}</Artist>
+        <BottomRow>
+          <ProductType>{productType}</ProductType>
+          <Price>{price}</Price>
+        </BottomRow>
+      </AlbumInfo>
       <AddToCartBtn onClick={handleAddToCart}>Lisää koriin</AddToCartBtn>
     </CardContainer>
   );
@@ -27,20 +29,25 @@ const CardContainer = styled.div`
   flex-direction: column;
   justify-content: start;
   height: fit-content;
-  min-width: 13rem;
-  padding: 0.5rem;
+  width: 13rem;
+
   gap: 0.5rem;
   background: ${(props) => props.theme.white};
-  box-shadow: ${(props) => props.theme.shadows.smallAround};
-  border-radius: 3px;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
+  border-radius: 0 0 3px 3px;
 `;
 
 const AlbumImg = styled.img`
-  height: 10rem;
-  width: 10rem;
   margin-bottom: 0.5rem;
   background: white;
   place-self: center;
+`;
+
+const AlbumInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 0.5rem;
 `;
 
 const AlbumName = styled.span`
@@ -60,11 +67,10 @@ const BottomRow = styled.div`
 
 const AddToCartBtn = styled.button`
   background: ${(props) => props.theme.orange};
-  box-shadow: ${(props) => props.theme.shadows.smallAround};
-  padding: 0.5rem;
+  padding: 0.8rem;
   margin-top: 0.5rem;
   border: 0;
-  border-radius: 3px;
+  border-radius: 0 0 3px 3px;
   font-weight: bold;
   transition: 50ms ease-out;
   &:hover {
