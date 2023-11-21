@@ -47,7 +47,7 @@ const SearchField = () => {
 
 const StyledSearchField = styled.input`
   background-color: ${(props) => props.theme.white};
-  height: 32px;
+  height: 2rem;
   width: 500px;
   border-radius: 5px;
   box-shadow: -2px 0px 6px -1px rgba(0, 0, 0, 0.75) inset;

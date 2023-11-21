@@ -17,5 +17,5 @@ export function CatalogPage() {
 
 const Container = styled.div`
   background: ${(props) => props.theme.lightGrey};
-  width: 100%;
+  min-width: 100%;
 `;

@@ -34,15 +34,17 @@ const Categories = () => {
 };
 
 const CategoryContainer = styled.div`
+  position: sticky;
+  top: 7.75rem;
   grid-column-start: 1;
   grid-column-end: 2;
   justify-self: end;
-  background-color: ${(props) => props.theme.lightGrey};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0.5rem;
+  background-color: ${(props) => props.theme.lightGrey};
   box-shadow: ${(props) => props.theme.shadows.smallAroundDark};
 `;
 

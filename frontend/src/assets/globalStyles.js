@@ -17,7 +17,7 @@ export const theme = {
   shadows: {
     smallAroundLight: '#aaa 0px 0px 10px 1px',
     smallAroundDark: '#555 0px 0px 10px 1px',
-    smallBottom: '#555 0px 1px 20px 0px'
+    smallBottom: '#444 0px 3px 15px 0px'
   }
 };
 
