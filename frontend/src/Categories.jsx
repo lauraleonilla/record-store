@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -20,18 +21,28 @@ const Categories = () => {
 
   return (
     <CategoryContainer>
+      <Categoryh1>Kategoriat</Categoryh1>
       {categories?.length
-        ? categories.map((category, index) => {
-            return (
-              <CategoryCard key={index}>
+        ? categories.map((category, index) => (
+            <StyledLink key={index} to={`/genre/${category.categoryname}`}>
+              <CategoryCard>
                 <p>{category.categoryname}</p>
               </CategoryCard>
-            );
-          })
+            </StyledLink>
+          ))
         : null}
     </CategoryContainer>
   );
 };
+
+const Categoryh1 = styled.h1`
+  margin-bottom: 20px;
+  font-weight: bold;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
 
 const CategoryContainer = styled.div`
   position: sticky;
@@ -39,6 +50,8 @@ const CategoryContainer = styled.div`
   grid-column-start: 1;
   grid-column-end: 2;
   justify-self: end;
+  background-color: ${(props) => props.theme.lightGrey};
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,6 +69,8 @@ const CategoryCard = styled.div`
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid ${(props) => props.theme.grey};
+  border-radius: 5px;
+  font-size: 24px;
 `;
 
 export default Categories;

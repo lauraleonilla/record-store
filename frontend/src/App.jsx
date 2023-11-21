@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import { CartProvider } from './context/Cart/CartContext';
 import { CatalogPage } from './pages/CatalogPage';
 import { AlbumSearch } from './pages/Search';
+import { FilteredCategory } from './pages/FilterCategories';
 import { Checkout } from './components/Checkout';
 import { SearchProvider } from './context/AlbumSearchContext';
 import RecordsLayout from './components/RecordsLayout';
@@ -34,6 +35,7 @@ const App = () => {
                   <Route path=":page" element={<CatalogPage />} />
                 </Route>
                 <Route path="search" element={<AlbumSearch />} />
+                <Route path="/genre/:categoryName" element={<FilteredCategory />} />
               </Route>
               <Route path="checkout" element={<Checkout />} />
             </Routes>
