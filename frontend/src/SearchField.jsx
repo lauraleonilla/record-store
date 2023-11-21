@@ -52,6 +52,8 @@ const StyledSearchField = styled.input`
   border-radius: 5px;
   box-shadow: -2px 0px 6px -1px rgba(0, 0, 0, 0.75) inset;
   padding-left: 10px;
+  position: sticky:
+  top: 0;
 `;
 
 export default SearchField;

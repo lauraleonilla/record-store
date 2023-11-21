@@ -71,6 +71,7 @@ const ShoppingCart = () => {
 const ComponentContainer = styled.div`
   position: absolute;
   right: 0;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundDark};
 `;
 
 const OpenCartButton = styled.button`
