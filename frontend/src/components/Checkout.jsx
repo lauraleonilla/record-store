@@ -3,34 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header2, StandardBold, Standard } from '../assets/globalStyles';
 import { Button } from './Button';
-import { useCart } from '../context/Cart/CartContext';
 import { validateFormValues } from '../utils';
-import axios from 'axios';
+import { useCart } from '../context/Cart/CartContext';
+import { FormInput } from './Input';
 
 export const Checkout = () => {
-  const [deliveryMethod, setDeliveryMethod] = useState('homeDelivery');
-  const [inputFields, setInputFields] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    address: '',
-    postalCode: '',
-    city: ''
-  });
   const [errors, setErrors] = useState({});
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const { emptyCart, calculateTotalPrice, cart } = useCart();
+  const { selectDeliveryMethod, deliveryMethod, updateOrderDetails, orderDetails } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const initialErrors = validateFormValues(inputFields, deliveryMethod);
+    const initialErrors = validateFormValues(orderDetails, deliveryMethod);
     setErrors(initialErrors);
   }, []);
 
   useEffect(() => {
     if (deliveryMethod === 'homeDelivery') {
-      setInputFields({
+      updateOrderDetails({
         firstName: '',
         lastName: '',
         email: '',
@@ -41,7 +31,7 @@ export const Checkout = () => {
       });
     }
     if (deliveryMethod === 'pickUp') {
-      setInputFields({
+      updateOrderDetails({
         firstName: '',
         lastName: '',
         email: '',
@@ -51,15 +41,15 @@ export const Checkout = () => {
   }, [deliveryMethod]);
 
   const onDeliveryMethodSelect = (e) => {
-    setDeliveryMethod(e.target.value);
+    selectDeliveryMethod(e.target.value);
   };
 
   const handleChange = (e) => {
-    setInputFields({ ...inputFields, [e.target.name]: e.target.value });
+    updateOrderDetails({ ...orderDetails, [e.target.name]: e.target.value });
   };
 
   const validateInputFields = () => {
-    const inputErrors = validateFormValues(inputFields, deliveryMethod);
+    const inputErrors = validateFormValues(orderDetails, deliveryMethod);
     setErrors(inputErrors);
     if (!Object.values(inputErrors).length) {
       setButtonDisabled(false);
@@ -68,125 +58,92 @@ export const Checkout = () => {
     }
   };
 
-  const handleSubmit = async (event) => {
-    const apiUrl = 'http://localhost:3001/main/order';
-    event.preventDefault();
-    const res = await axios.post(apiUrl, {
-      ...inputFields,
-      items: cart,
-      totalPrice: calculateTotalPrice(),
-      deliveryMethod: deliveryMethod === 'homeDelivery' ? 'HOME' : 'PICK_UP'
-    });
-    if (res.status === 200) {
-      emptyCart();
-      navigate('/success');
-    }
-  };
-
   return (
     <CheckoutContainer>
-      <form onSubmit={handleSubmit}>
-        <InnerContainer>
-          <HeaderContainer>
-            <Header2>Täytä tilauksen tiedot</Header2>
-            <Standard>Tähdellä merkityt kentät ovat pakollisia</Standard>
-          </HeaderContainer>
-          <StandardBold>Valitse toimitustapa</StandardBold>
-          <RadioButtonContainer>
-            <input
-              type="radio"
-              value="homeDelivery"
-              name="deliveryMethod"
-              checked={deliveryMethod === 'homeDelivery'}
-              onChange={onDeliveryMethodSelect}
-            />
-            <Standard>Kotiinkuljetus</Standard>
-          </RadioButtonContainer>
-          <RadioButtonContainer>
-            <input
-              type="radio"
-              value="pickUp"
-              name="deliveryMethod"
-              checked={deliveryMethod === 'pickUp'}
-              onChange={onDeliveryMethodSelect}
-            />
-            <Standard>Nouto myymälästä</Standard>
-          </RadioButtonContainer>
-          <StandardBold>Henkilötiedot</StandardBold>
-          <InputContainer>
-            <p>Etunimi*</p>
-            <CheckoutInput
-              value={inputFields.firstName}
+      <InnerContainer>
+        <HeaderContainer>
+          <Header2>Täytä tilauksen tiedot</Header2>
+          <Standard>Tähdellä merkityt kentät ovat pakollisia</Standard>
+        </HeaderContainer>
+        <StandardBold>Valitse toimitustapa</StandardBold>
+        <RadioButtonContainer>
+          <input
+            type="radio"
+            value="homeDelivery"
+            checked={deliveryMethod === 'homeDelivery'}
+            onChange={onDeliveryMethodSelect}
+          />
+          <Standard>Kotiinkuljetus</Standard>
+        </RadioButtonContainer>
+        <RadioButtonContainer>
+          <input
+            type="radio"
+            value="pickUp"
+            checked={deliveryMethod === 'pickUp'}
+            onChange={onDeliveryMethodSelect}
+          />
+          <Standard>Nouto myymälästä</Standard>
+        </RadioButtonContainer>
+        <StandardBold>Henkilötiedot</StandardBold>
+        <FormInput
+          description={'Etunimi*'}
+          value={orderDetails.firstName}
+          onChange={handleChange}
+          onBlur={validateInputFields}
+          name="firstName"
+        />
+        <FormInput
+          description={'Sukunimi*'}
+          value={orderDetails.lastName}
+          onChange={handleChange}
+          onBlur={validateInputFields}
+          name="lastName"
+        />
+        <FormInput
+          description={'Sähköposti*'}
+          value={orderDetails.email}
+          onChange={handleChange}
+          onBlur={validateInputFields}
+          name="email"
+        />
+        <FormInput
+          description={'Puhelinnumero'}
+          value={orderDetails.phoneNumber}
+          onChange={handleChange}
+          onBlur={validateInputFields}
+          name="phoneNumber"
+        />
+        {deliveryMethod === 'homeDelivery' ? (
+          <AddressContainer>
+            <StandardBold>Toimitusosoite</StandardBold>
+            <FormInput
+              description={'Katuosoite*'}
+              value={orderDetails.address}
               onChange={handleChange}
               onBlur={validateInputFields}
-              name="firstName"
+              name="address"
             />
-          </InputContainer>
-          <InputContainer>
-            <p>Sukunimi*</p>
-            <CheckoutInput
-              value={inputFields.lastName}
+            <FormInput
+              description={'Postinumero*'}
+              value={orderDetails.postalCode}
               onChange={handleChange}
               onBlur={validateInputFields}
-              name="lastName"
+              name="postalCode"
             />
-          </InputContainer>
-          <InputContainer>
-            <p>Sähköposti*</p>
-            <CheckoutInput
-              value={inputFields.email}
+            <FormInput
+              description={'Toimipaikka*'}
+              value={orderDetails.city}
               onChange={handleChange}
               onBlur={validateInputFields}
-              name="email"
+              name="city"
             />
-          </InputContainer>
-          <InputContainer>
-            <p>Puhelinnumero</p>
-            <CheckoutInput
-              value={inputFields.phoneNumber}
-              onChange={handleChange}
-              onBlur={validateInputFields}
-              name="phoneNumber"
-            />
-          </InputContainer>
-          {deliveryMethod === 'homeDelivery' ? (
-            <AddressContainer>
-              <StandardBold>Toimitusosoite</StandardBold>
-              <InputContainer>
-                <p>Katuosoite*</p>
-                <CheckoutInput
-                  value={inputFields.address}
-                  onChange={handleChange}
-                  onBlur={validateInputFields}
-                  name="address"
-                />
-              </InputContainer>
-              <InputContainer>
-                <p>Postinumero*</p>
-                <CheckoutInput
-                  value={inputFields.postalCode}
-                  onChange={handleChange}
-                  onBlur={validateInputFields}
-                  name="postalCode"
-                />
-              </InputContainer>
-              <InputContainer>
-                <p>Toimipaikka*</p>
-                <CheckoutInput
-                  value={inputFields.city}
-                  onChange={handleChange}
-                  onBlur={validateInputFields}
-                  name="city"
-                />
-              </InputContainer>
-            </AddressContainer>
-          ) : null}
-        </InnerContainer>
-        <Button disabled={buttonDisabled} text={'Lähetä tilaus'} type="submit" />
-        {Object.values(errors).map((err) => (
-          <ErrorMessage key={err}>{err}</ErrorMessage>
-        ))}
-      </form>
+          </AddressContainer>
+        ) : null}
+      </InnerContainer>
+      <Button disabled={buttonDisabled} text={'Seuraava'} onClick={() => navigate('/payment')} />
+      {Object.values(errors).map((err) => (
+        <ErrorMessage key={err}>{err}</ErrorMessage>
+      ))}
     </CheckoutContainer>
   );
 };
@@ -214,20 +171,8 @@ const HeaderContainer = styled.div`
   margin-botton: 50px;
 `;
 
-const CheckoutInput = styled.input`
-  width: 300px;
-  height: 30px;
-  border: 1px solid ${(props) => props.theme.grey};
-  border-radius: 4px;
-  padding-left: 5px;
-`;
-
 const AddressContainer = styled.div`
   margin-top: 50px;
-`;
-
-const InputContainer = styled.div`
-  margin-bottom: 20px;
 `;
 
 const RadioButtonContainer = styled.div`

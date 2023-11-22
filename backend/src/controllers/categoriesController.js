@@ -10,7 +10,7 @@ export const getCategories = async (req, res) => {
   }
   try {
     const query = {
-      text: "SELECT * FROM categories;",
+      text: "SELECT * FROM categories ORDER BY categoryname ASC;",
     };
     const data = await client.query(query);
     res.send(data.rows).status(200);

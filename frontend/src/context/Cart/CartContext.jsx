@@ -12,6 +12,16 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [deliveryMethod, setDeliveryMethod] = useState('');
+  const [orderDetails, setOrderDetails] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    address: '',
+    postalCode: '',
+    city: ''
+  });
 
   const saveCartToLocalStorage = (updatedCart) => {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
@@ -37,6 +47,14 @@ export const CartProvider = ({ children }) => {
     saveCartToLocalStorage(updatedCart);
   };
 
+  const selectDeliveryMethod = (method) => {
+    setDeliveryMethod(method);
+  };
+
+  const updateOrderDetails = (details) => {
+    setOrderDetails(details);
+  };
+
   const deleteCartItem = (index) => {
     const updatedCart = cart.filter((_, i) => i !== index);
     setCart(updatedCart);
@@ -50,7 +68,18 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, deleteCartItem, numItemsInCart, calculateTotalPrice, emptyCart }}>
+      value={{
+        cart,
+        addToCart,
+        deleteCartItem,
+        numItemsInCart,
+        calculateTotalPrice,
+        emptyCart,
+        deliveryMethod,
+        selectDeliveryMethod,
+        updateOrderDetails,
+        orderDetails
+      }}>
       {children}
     </CartContext.Provider>
   );
