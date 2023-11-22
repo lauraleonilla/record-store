@@ -32,8 +32,10 @@ export function FilteredCategory() {
   const content =
     albumCards.length > 0 ? (
       <FilteredCategoryContainer>
-        <CategoryHeader>{categoryName}</CategoryHeader>
-        <AlbumContainer>{albumCards}</AlbumContainer>
+        <CategoryHeaderContainer>
+          <CategoryHeader>{categoryName}</CategoryHeader>
+        </CategoryHeaderContainer>
+        <ModifiedAlbumContainer>{albumCards}</ModifiedAlbumContainer>
       </FilteredCategoryContainer>
     ) : (
       <FilterContainer>
@@ -46,22 +48,27 @@ export function FilteredCategory() {
 const FilteredCategoryContainer = styled.div`
   min-width: 100%;
   background: ${(props) => props.theme.lightGrey};
+  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
+`;
+
+const CategoryHeaderContainer = styled.div`
+  padding: 3rem 0 2rem 0;
+  background: ${(props) => props.theme.lightGrey};
 `;
 
 const CategoryHeader = styled.div`
   font-size: 2rem;
-  position: relative;
-  padding: 1rem;
-  margin: 20px 0 0 0;
-  min-width: 100%;
+  padding: 1.5rem;
   text-align: center;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
   background: ${(props) => props.theme.white};
+`;
+const ModifiedAlbumContainer = styled(AlbumContainer)`
+  box-shadow: none;
 `;
 
 const FilterContainer = styled.div`
   padding: 2rem;
   min-width: 100%;
-  justify-items: center;
   background: ${(props) => props.theme.lightGrey};
 `;
