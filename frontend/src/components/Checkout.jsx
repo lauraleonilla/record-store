@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Header2, StandardBold, Standard } from '../assets/globalStyles';
 import { Button } from './Button';
 import { validateFormValues } from '../utils';
+import axios from 'axios';
 
 export const Checkout = () => {
   const [deliveryMethod, setDeliveryMethod] = useState();
@@ -24,6 +25,30 @@ export const Checkout = () => {
     setErrors(initialErrors);
   }, []);
 
+  useEffect(() => {
+    if (deliveryMethod === 'homeDelivery') {
+      setInputFields({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        deliveryMethod: '',
+        address: '',
+        postalCode: '',
+        city: ''
+      });
+    }
+    if (deliveryMethod === 'pickUp') {
+      setInputFields({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        deliveryMethod: ''
+      });
+    }
+  }, [deliveryMethod]);
+
   const onDeliveryMethodSelect = (e) => {
     setDeliveryMethod(e.target.value);
     handleChange(e);
@@ -37,9 +62,12 @@ export const Checkout = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    const apiUrl = 'http://localhost:3001/main/order';
     event.preventDefault();
     console.log('handleSubmit', errors);
+    const res = await axios.post(apiUrl, inputFields);
+    console.log('RES', res);
   };
 
   return (
