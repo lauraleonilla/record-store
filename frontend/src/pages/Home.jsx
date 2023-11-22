@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { AlbumContainer } from '../components/AlbumContainer';
+import styled from 'styled-components';
+import { AlbumContainer as BaseAlbumContainer } from '../components/AlbumContainer';
 import { createCards } from '../hooks/useAlbumData';
 
 export default function Home() {
@@ -26,5 +27,49 @@ export default function Home() {
     getAlbumData();
   }, []);
 
-  return <AlbumContainer>{albumCards}</AlbumContainer>;
+  return (
+    <HomeContainer>
+      <Homebanner>Musiikkia jokaiseen makuun!</Homebanner>
+      <HomeContent>
+        <HomeHeaderContainer>
+          <HomeHeader>Viikon uutuudet</HomeHeader>
+        </HomeHeaderContainer>
+        <ModifiedAlbumContainer>{albumCards}</ModifiedAlbumContainer>;
+      </HomeContent>
+    </HomeContainer>
+  );
 }
+
+const HomeContainer = styled.div`
+  min-width: 100%;
+`;
+
+const Homebanner = styled.div`
+  background: ${(props) => props.theme.white};
+  padding: 2.5rem;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
+`;
+
+const HomeContent = styled.div`
+  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
+`;
+
+const HomeHeaderContainer = styled.div`
+  padding: 3rem 0 2rem 0;
+  background: ${(props) => props.theme.lightGrey};
+`;
+
+const HomeHeader = styled.div`
+  font-size: 2rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
+  background: ${(props) => props.theme.white};
+`;
+
+const ModifiedAlbumContainer = styled(BaseAlbumContainer)`
+  box-shadow: none;
+`;
