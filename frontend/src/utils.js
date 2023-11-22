@@ -4,7 +4,7 @@ export const validateFormValues = (inputValues, deliveryMethod) => {
     errors.firstName = 'First name is too short';
   }
   if (inputValues.lastName.length < 2) {
-    errors.firstName = 'Last name is too short';
+    errors.lastName = 'Last name is too short';
   }
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i.test(inputValues.email)) {
     errors.email = 'Invalid email';
