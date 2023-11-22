@@ -3,17 +3,20 @@ import AlbumCard from '../components/AlbumCard';
 import { PaginationContext } from '../context/PaginationContext';
 
 export function createCards(albumData) {
-  const cards = albumData.map(({ albumname, artistname, producttype, price } = albumData, i) => {
-    return (
-      <AlbumCard
-        key={i}
-        albumName={albumname}
-        artist={artistname}
-        productType={producttype}
-        price={price}
-      />
-    );
-  });
+  const cards = albumData.map(
+    ({ albumname, artistname, producttype, price, albumimage } = albumData, i) => {
+      return (
+        <AlbumCard
+          key={i}
+          albumName={albumname}
+          artist={artistname}
+          productType={producttype}
+          price={price}
+          albumimage={albumimage}
+        />
+      );
+    }
+  );
   return cards;
 }
 export default function useAlbumData(urlString, pageIndex) {

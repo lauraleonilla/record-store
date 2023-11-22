@@ -2,15 +2,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCart } from '../context/Cart/CartContext';
 
-export default function AlbumCard({ albumName, artist, productType, price }) {
+export default function AlbumCard({ albumName, artist, productType, price, albumimage }) {
   const { addToCart } = useCart();
   const handleAddToCart = () => {
     const album = { albumName, artist, productType, price };
     addToCart(album);
   };
+
   return (
     <CardContainer>
-      <AlbumImg src="https://placehold.co/208x208" />
+      <AlbumImg src={albumimage} />
       <AlbumInfo>
         <AlbumName>{albumName}</AlbumName>
         <Artist>{artist}</Artist>
@@ -38,6 +39,7 @@ const CardContainer = styled.div`
 `;
 
 const AlbumImg = styled.img`
+  width: 100%;
   margin-bottom: 0.5rem;
   background: white;
   place-self: center;
