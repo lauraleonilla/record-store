@@ -62,3 +62,22 @@ export const searchAlbums = async (req, res) => {
     client.release();
   }
 };
+
+export const getAlbumsByGenre = async (req, res) => {
+  const { genre } = req.params;
+
+  try {
+    const client = await pool.connect();
+    const query = {
+      text: 'SELECT * FROM albums WHERE category = $1',
+      values: [genre],
+    };
+    const data = await client.query(query);
+    res.status(200).json(data.rows);
+    client.release();
+  } catch (error) {
+    console.error('Error getting albums by genre:', error);
+    res.status(500).send('Error getting albums by genre');
+  }
+};
+

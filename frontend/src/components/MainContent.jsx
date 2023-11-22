@@ -6,5 +6,5 @@ export const MainContent = styled.main`
   align-items: start;
   justify-items: center;
   gap: 2rem;
-  margin: 0 2rem;
+  margin: 2rem;
 `;

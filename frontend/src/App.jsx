@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import { CartProvider } from './context/Cart/CartContext';
 import { CatalogPage } from './pages/CatalogPage';
 import { AlbumSearch } from './pages/Search';
+import { FilteredCategory } from './pages/FilterCategories';
 import { Checkout } from './components/Checkout';
 import { SearchProvider } from './context/AlbumSearchContext';
 import RecordsLayout from './components/RecordsLayout';
@@ -21,6 +22,9 @@ const App = () => {
       <StyledApp>
         <GlobalStyle />
         <SearchProvider>
+          <Header>
+            <LogoText>LEVYKAUPPA-Y</LogoText>
+          </Header>
           <TopBar />
           <CartProvider>
             {/* <BodyWrapper> */}
@@ -31,6 +35,7 @@ const App = () => {
                   <Route path=":page" element={<CatalogPage />} />
                 </Route>
                 <Route path="search" element={<AlbumSearch />} />
+                <Route path="/genre/:categoryName" element={<FilteredCategory />} />
               </Route>
               <Route path="checkout" element={<Checkout />} />
             </Routes>
@@ -48,6 +53,20 @@ const StyledApp = styled.div`
   background-size: cover;
   background-attachment: fixed;
   height: fit-content;
+`;
+
+const Header = styled.div`
+  background: RGBA(25, 25, 35, 75%);
+  z-index: 1;
+`;
+
+const LogoText = styled.h1`
+  color: ${(props) => props.theme.ashGrey};
+  margin-bottom: -18px;
+  font-size: 4rem;
+  font-weight: 900;
+  margin-top: -12px;
+  margin-left: 0.5rem;
 `;
 
 export default App;
