@@ -57,7 +57,7 @@ const ShoppingCart = () => {
           <CartFooter>
             <TotalPrice>Yhteensä: {calculateTotalPrice()} </TotalPrice>
 
-            <CheckoutLink to="/checkout">Kassalle</CheckoutLink>
+            {cart.length ? <CheckoutLink to="/checkout">Kassalle</CheckoutLink> : null}
           </CartFooter>
         </CartContainer>
       )}

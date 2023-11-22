@@ -3,27 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header2, StandardBold, Standard } from '../assets/globalStyles';
 import { Button } from './Button';
+import { useCart } from '../context/Cart/CartContext';
 import { validateFormValues } from '../utils';
 import axios from 'axios';
 
 export const Checkout = () => {
-  const [deliveryMethod, setDeliveryMethod] = useState();
+  const [deliveryMethod, setDeliveryMethod] = useState('homeDelivery');
   const [inputFields, setInputFields] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phoneNumber: '',
-    deliveryMethod: '',
     address: '',
     postalCode: '',
     city: ''
   });
   const [errors, setErrors] = useState({});
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const { emptyCart, calculateTotalPrice, cart } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const initialErrors = validateFormValues(inputFields);
+    const initialErrors = validateFormValues(inputFields, deliveryMethod);
     setErrors(initialErrors);
   }, []);
 
@@ -34,7 +35,6 @@ export const Checkout = () => {
         lastName: '',
         email: '',
         phoneNumber: '',
-        deliveryMethod: '',
         address: '',
         postalCode: '',
         city: ''
@@ -45,31 +45,40 @@ export const Checkout = () => {
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumber: '',
-        deliveryMethod: ''
+        phoneNumber: ''
       });
     }
   }, [deliveryMethod]);
 
   const onDeliveryMethodSelect = (e) => {
     setDeliveryMethod(e.target.value);
-    handleChange(e);
   };
 
   const handleChange = (e) => {
     setInputFields({ ...inputFields, [e.target.name]: e.target.value });
-    setErrors(validateFormValues(inputFields));
-    if (!Object.values(errors).length) {
+  };
+
+  const validateInputFields = () => {
+    const inputErrors = validateFormValues(inputFields, deliveryMethod);
+    setErrors(inputErrors);
+    if (!Object.values(inputErrors).length) {
       setButtonDisabled(false);
+    } else if (Object.values(inputErrors).length) {
+      setButtonDisabled(true);
     }
   };
 
   const handleSubmit = async (event) => {
     const apiUrl = 'http://localhost:3001/main/order';
     event.preventDefault();
-    console.log('handleSubmit', errors);
-    const res = await axios.post(apiUrl, { ...inputFields, items: {}, deliveryMethod: 'PICK_UP' });
+    const res = await axios.post(apiUrl, {
+      ...inputFields,
+      items: cart,
+      totalPrice: calculateTotalPrice(),
+      deliveryMethod: deliveryMethod === 'homeDelivery' ? 'HOME' : 'PICK_UP'
+    });
     if (res.status === 200) {
+      emptyCart();
       navigate('/success');
     }
   };
@@ -88,6 +97,7 @@ export const Checkout = () => {
               type="radio"
               value="homeDelivery"
               name="deliveryMethod"
+              checked={deliveryMethod === 'homeDelivery'}
               onChange={onDeliveryMethodSelect}
             />
             <Standard>Kotiinkuljetus</Standard>
@@ -97,6 +107,7 @@ export const Checkout = () => {
               type="radio"
               value="pickUp"
               name="deliveryMethod"
+              checked={deliveryMethod === 'pickUp'}
               onChange={onDeliveryMethodSelect}
             />
             <Standard>Nouto myymälästä</Standard>
@@ -104,21 +115,37 @@ export const Checkout = () => {
           <StandardBold>Henkilötiedot</StandardBold>
           <InputContainer>
             <p>Etunimi*</p>
-            <CheckoutInput value={inputFields.firstName} onChange={handleChange} name="firstName" />
+            <CheckoutInput
+              value={inputFields.firstName}
+              onChange={handleChange}
+              onBlur={validateInputFields}
+              name="firstName"
+            />
           </InputContainer>
           <InputContainer>
             <p>Sukunimi*</p>
-            <CheckoutInput value={inputFields.lastName} onChange={handleChange} name="lastName" />
+            <CheckoutInput
+              value={inputFields.lastName}
+              onChange={handleChange}
+              onBlur={validateInputFields}
+              name="lastName"
+            />
           </InputContainer>
           <InputContainer>
             <p>Sähköposti*</p>
-            <CheckoutInput value={inputFields.email} onChange={handleChange} name="email" />
+            <CheckoutInput
+              value={inputFields.email}
+              onChange={handleChange}
+              onBlur={validateInputFields}
+              name="email"
+            />
           </InputContainer>
           <InputContainer>
             <p>Puhelinnumero</p>
             <CheckoutInput
               value={inputFields.phoneNumber}
               onChange={handleChange}
+              onBlur={validateInputFields}
               name="phoneNumber"
             />
           </InputContainer>
@@ -127,26 +154,37 @@ export const Checkout = () => {
               <StandardBold>Toimitusosoite</StandardBold>
               <InputContainer>
                 <p>Katuosoite*</p>
-                <CheckoutInput value={inputFields.address} onChange={handleChange} name="address" />
+                <CheckoutInput
+                  value={inputFields.address}
+                  onChange={handleChange}
+                  onBlur={validateInputFields}
+                  name="address"
+                />
               </InputContainer>
               <InputContainer>
                 <p>Postinumero*</p>
                 <CheckoutInput
                   value={inputFields.postalCode}
                   onChange={handleChange}
+                  onBlur={validateInputFields}
                   name="postalCode"
                 />
               </InputContainer>
               <InputContainer>
                 <p>Toimipaikka*</p>
-                <CheckoutInput value={inputFields.city} onChange={handleChange} name="city" />
+                <CheckoutInput
+                  value={inputFields.city}
+                  onChange={handleChange}
+                  onBlur={validateInputFields}
+                  name="city"
+                />
               </InputContainer>
             </AddressContainer>
           ) : null}
         </InnerContainer>
         <Button disabled={buttonDisabled} text={'Lähetä tilaus'} type="submit" />
         {Object.values(errors).map((err) => (
-          <p key={err}>{err}</p>
+          <ErrorMessage key={err}>{err}</ErrorMessage>
         ))}
       </form>
     </CheckoutContainer>
@@ -166,6 +204,10 @@ const CheckoutContainer = styled.div`
 
 const InnerContainer = styled.div`
   justify-content: flex-start;
+`;
+
+const ErrorMessage = styled.p`
+  color: ${(props) => props.theme.red};
 `;
 
 const HeaderContainer = styled.div`

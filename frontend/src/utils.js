@@ -1,4 +1,4 @@
-export const validateFormValues = (inputValues) => {
+export const validateFormValues = (inputValues, deliveryMethod) => {
   let errors = {};
   if (inputValues.firstName.length < 2) {
     errors.firstName = 'First name is too short';
@@ -12,14 +12,16 @@ export const validateFormValues = (inputValues) => {
   if (!/^\+?[0-9\s-]+$/.test(inputValues.phoneNumber)) {
     errors.phoneNumber = 'Invalid phonenumber';
   }
-  if (inputValues.address && inputValues.address.length < 10) {
-    errors.address = 'Too short address';
-  }
-  if (inputValues.postalCode && !/^[0-9]{5}$/.test(inputValues.postalCode)) {
-    errors.postalCode = 'Invalid postal code';
-  }
-  if (inputValues.city && inputValues.city.length < 2) {
-    errors.city = 'Too short city name';
+  if (deliveryMethod === 'homeDelivery') {
+    if (inputValues.address && inputValues.address.length < 10) {
+      errors.address = 'Too short address';
+    }
+    if (inputValues.postalCode && !/^[0-9]{5}$/.test(inputValues.postalCode)) {
+      errors.postalCode = 'Invalid postal code';
+    }
+    if (inputValues.city && inputValues.city.length < 2) {
+      errors.city = 'Too short city name';
+    }
   }
   return errors;
 };
