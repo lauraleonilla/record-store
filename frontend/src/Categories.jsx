@@ -24,11 +24,21 @@ const Categories = () => {
       <Categoryh1>Kategoriat</Categoryh1>
       {categories?.length
         ? categories.map((category, index) => (
-            <StyledLink key={index} to={`/genre/${category.categoryname}`}>
-              <CategoryCard>
-                <p>{category.categoryname}</p>
-              </CategoryCard>
-            </StyledLink>
+            <React.Fragment key={index}>
+              {category.categoryname === 'Kaikki kategoriat' ? (
+                <StyledLink to={`records/1`}>
+                  <CategoryCard>
+                    <p>{category.categoryname}</p>
+                  </CategoryCard>
+                </StyledLink>
+              ) : (
+                <StyledLink to={`/genre/${category.categoryname}`} key={index}>
+                  <CategoryCard>
+                    <p>{category.categoryname}</p>
+                  </CategoryCard>
+                </StyledLink>
+              )}
+            </React.Fragment>
           ))
         : null}
     </CategoryContainer>
