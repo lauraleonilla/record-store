@@ -14,6 +14,7 @@ import { FilteredCategory } from './pages/FilterCategories';
 import { Checkout } from './components/Checkout';
 import { SearchProvider } from './context/AlbumSearchContext';
 import RecordsLayout from './components/RecordsLayout';
+import { OrderSuccess } from './pages/OrderSuccess';
 // import { BodyWrapper } from './components/BodyWrapper,';
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
                 <Route path="/genre/:categoryName" element={<FilteredCategory />} />
               </Route>
               <Route path="checkout" element={<Checkout />} />
+              <Route path="success" element={<OrderSuccess />} />
             </Routes>
             {/* </BodyWrapper> */}
           </CartProvider>

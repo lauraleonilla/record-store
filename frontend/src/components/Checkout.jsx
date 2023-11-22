@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header2, StandardBold, Standard } from '../assets/globalStyles';
 import { Button } from './Button';
@@ -19,6 +20,7 @@ export const Checkout = () => {
   });
   const [errors, setErrors] = useState({});
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initialErrors = validateFormValues(inputFields);
@@ -66,8 +68,10 @@ export const Checkout = () => {
     const apiUrl = 'http://localhost:3001/main/order';
     event.preventDefault();
     console.log('handleSubmit', errors);
-    const res = await axios.post(apiUrl, inputFields);
-    console.log('RES', res);
+    const res = await axios.post(apiUrl, { ...inputFields, items: {}, deliveryMethod: 'PICK_UP' });
+    if (res.status === 200) {
+      navigate('/success');
+    }
   };
 
   return (
