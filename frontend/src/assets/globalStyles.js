@@ -14,6 +14,7 @@ export const theme = {
   orange: 'HSL(23, 100%, 65%)',
   lightOrange: 'HSL(23, 100%, 70%)',
   extraLightOrange: 'HSL(23, 100%, 85%)',
+  red: '#ff0000',
   shadows: {
     smallAroundLight: '#aaa 0px 0px 10px 1px',
     smallAroundDark: '#555 0px 0px 10px 1px',

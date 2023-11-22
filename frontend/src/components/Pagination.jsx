@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { PaginationContext } from '../context/PaginationContext';
 import { NavLink } from 'react-router-dom';

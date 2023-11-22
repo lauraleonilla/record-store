@@ -43,9 +43,14 @@ export const CartProvider = ({ children }) => {
     saveCartToLocalStorage(updatedCart);
   };
 
+  const emptyCart = () => {
+    setCart([]);
+    saveCartToLocalStorage([]);
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, deleteCartItem, numItemsInCart, calculateTotalPrice }}>
+      value={{ cart, addToCart, deleteCartItem, numItemsInCart, calculateTotalPrice, emptyCart }}>
       {children}
     </CartContext.Provider>
   );
