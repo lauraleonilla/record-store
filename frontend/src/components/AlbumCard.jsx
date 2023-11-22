@@ -75,6 +75,7 @@ const AddToCartBtn = styled.button`
   border-radius: 0 0 3px 3px;
   font-weight: bold;
   transition: 50ms ease-out;
+  cursor: pointer;
   &:hover {
     transition: 50ms ease-in;
     background: ${(props) => props.theme.lightOrange};

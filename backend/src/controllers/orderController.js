@@ -28,6 +28,9 @@ export async function saveOrder(req, res) {
     const data = await client.query(query);
     res.send().status(200);
   } catch (err) {
+    res.status(err.status).send({
+      message: err.message,
+    });
     console.log(err);
   } finally {
     client.release();
