@@ -46,7 +46,7 @@ const Categories = () => {
 };
 
 const Categoryh1 = styled.h1`
-  margin-bottom: 20px;
+  padding: 1rem;
   font-weight: bold;
 `;
 
@@ -69,6 +69,7 @@ const CategoryContainer = styled.div`
   padding: 0.5rem;
   background-color: ${(props) => props.theme.lightGrey};
   box-shadow: ${(props) => props.theme.shadows.smallAroundDark};
+  padding-bottom: 1rem;
 `;
 
 const CategoryCard = styled.div`

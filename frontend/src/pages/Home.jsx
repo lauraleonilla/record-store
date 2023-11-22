@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { AlbumContainer as BaseAlbumContainer } from '../components/AlbumContainer';
+import { AlbumContainer } from '../components/AlbumContainer';
 import { createCards } from '../hooks/useAlbumData';
 
 export default function Home() {
@@ -70,6 +70,6 @@ const HomeHeader = styled.div`
   background: ${(props) => props.theme.white};
 `;
 
-const ModifiedAlbumContainer = styled(BaseAlbumContainer)`
+const ModifiedAlbumContainer = styled(AlbumContainer)`
   box-shadow: none;
 `;
