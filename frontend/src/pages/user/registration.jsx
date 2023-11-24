@@ -171,7 +171,7 @@ export function Registration() {
       });
       if (res.ok) {
         const data = res.json();
-        console.log(data.value);
+        console.log(data);
       }
     }
   }
