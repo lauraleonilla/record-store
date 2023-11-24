@@ -172,6 +172,17 @@ export function Registration() {
       if (res.ok) {
         const data = res.json();
         console.log(data);
+        setInputvalues({
+          firstName: '',
+          lastName: '',
+          address: '',
+          postalCode: '',
+          city: '',
+          email: '',
+          phoneNumber: '',
+          password: '',
+          confirmPassword: ''
+        });
       }
     }
   }
