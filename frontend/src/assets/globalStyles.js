@@ -9,6 +9,7 @@ export const theme = {
   white: '#FFFFFF',
   black: '#000000',
   grey: '#808080',
+  midGrey: '#C0C0C0',
   lightGrey: '#F2F2F2',
   darkOrange: 'HSL(23, 100%, 50%)',
   orange: 'HSL(23, 100%, 65%)',
