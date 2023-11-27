@@ -3,10 +3,17 @@ import styled from 'styled-components';
 import { PaginationContext } from '../context/PaginationContext';
 import { NavLink } from 'react-router-dom';
 
-export function Pagination({ currentPage }) {
+export function Pagination({ currentPage, categoryName }) {
   const { itemCount, itemsPerPage } = useContext(PaginationContext);
   const totalPages = Math.ceil(itemCount / itemsPerPage);
-  const getPageLink = (page) => `/records/${page}`;
+
+  const getPageLink = (page) => {
+    if (categoryName) {
+      return `/records/genre/${categoryName}/${page}`;
+    } else {
+      return `/records/${page}`;
+    }
+  };
 
   const pages = [];
   for (let i = 1; i <= totalPages; i++) {
@@ -16,6 +23,7 @@ export function Pagination({ currentPage }) {
       </li>
     );
   }
+  const showPrevNextButtons = totalPages > 1;
 
   useEffect(() => {
     console.log(currentPage);
@@ -25,14 +33,18 @@ export function Pagination({ currentPage }) {
   if (pattern.test(window.location.pathname)) {
     return (
       <PagesContainer>
-        <PrevPageBtn to={`/records/${currentPage > 1 ? parseInt(currentPage) - 1 : currentPage}`}>
-          prev
-        </PrevPageBtn>
+        {showPrevNextButtons && ( // Conditionally render the "prev" button
+          <PrevPageBtn to={getPageLink(currentPage > 1 ? parseInt(currentPage) - 1 : currentPage)}>
+            Edellinen
+          </PrevPageBtn>
+        )}
         <PagesList>{pages}</PagesList>
-        <NextPageBtn
-          to={`/records/${currentPage < totalPages ? parseInt(currentPage) + 1 : currentPage}`}>
-          next
-        </NextPageBtn>
+        {showPrevNextButtons && ( // Conditionally render the "next" button
+          <NextPageBtn
+            to={getPageLink(currentPage < totalPages ? parseInt(currentPage) + 1 : currentPage)}>
+            Seuraava
+          </NextPageBtn>
+        )}
       </PagesContainer>
     );
   }

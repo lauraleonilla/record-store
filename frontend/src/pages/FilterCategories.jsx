@@ -1,47 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AlbumContainer } from '../components/AlbumContainer';
-import { createCards } from '../hooks/useAlbumData';
 import { useParams } from 'react-router-dom';
+import { Pagination } from '../components/Pagination';
+import useAlbumData from '../hooks/useAlbumData';
 
 export function FilteredCategory() {
-  const [albumCards, setAlbumCards] = useState([]);
-  const { categoryName } = useParams();
+  const { categoryName, page } = useParams();
+  const albumCards = useAlbumData(categoryName, page);
 
-  useEffect(() => {
-    async function getAlbumsByCategory() {
-      try {
-        const res = await fetch(`http://localhost:3001/albums/${categoryName}`, {
-          method: 'GET',
-          headers: {
-            'content-type': 'application/json'
-          }
-        });
-        if (res.ok) {
-          const albumData = await res.json();
-          const cards = await createCards(albumData);
-          setAlbumCards(cards);
-        }
-      } catch (err) {
-        console.log('Failed to get albums by category: ', err);
-      }
-    }
-    getAlbumsByCategory();
-  }, [categoryName]);
+  let content;
 
-  const content =
-    albumCards.length > 0 ? (
+  if (albumCards && albumCards.length > 0) {
+    content = (
       <FilteredCategoryContainer>
         <CategoryHeaderContainer>
           <CategoryHeader>{categoryName}</CategoryHeader>
         </CategoryHeaderContainer>
         <ModifiedAlbumContainer>{albumCards}</ModifiedAlbumContainer>
+        <Pagination currentPage={page} categoryName={categoryName} />
       </FilteredCategoryContainer>
-    ) : (
+    );
+  } else {
+    content = (
       <FilterContainer>
         <p>Albumeita ei löytynyt kategoriasta: {categoryName}</p>
       </FilterContainer>
     );
+  }
 
   return <>{content}</>;
 }

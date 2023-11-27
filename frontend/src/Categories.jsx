@@ -26,13 +26,13 @@ const Categories = () => {
         ? categories.map((category, index) => (
             <React.Fragment key={index}>
               {category.categoryname === 'Kaikki kategoriat' ? (
-                <StyledLink to={`records/1`}>
+                <StyledLink to={`/records/1`}>
                   <CategoryCard>
                     <p>{category.categoryname}</p>
                   </CategoryCard>
                 </StyledLink>
               ) : (
-                <StyledLink to={`/genre/${category.categoryname}`} key={index}>
+                <StyledLink to={`/records/genre/${category.categoryname}/1`} key={index}>
                   <CategoryCard>
                     <p>{category.categoryname}</p>
                   </CategoryCard>

@@ -23,7 +23,7 @@ export async function getAllAlbums(req, res) {
   const { itemIndex, itemsPerPage } = req.body;
   try {
     const query = {
-      text: "SELECT albumName, artistName,productType, albumimage, price FROM albums WHERE albumId > $1 LIMIT $2",
+      text: "SELECT albumName, artistName,productType, albumimage, price FROM albums OFFSET $1 LIMIT $2",
       values: [itemIndex, itemsPerPage],
     };
     const count = await client.query("SELECT COUNT(*) FROM albums");
@@ -64,19 +64,26 @@ export const searchAlbums = async (req, res) => {
 };
 
 export const getAlbumsByGenre = async (req, res) => {
+  const client = await pool.connect();
+  const { itemIndex, itemsPerPage } = req.body;
   const { genre } = req.params;
 
   try {
-    const client = await pool.connect();
     const query = {
-      text: "SELECT * FROM albums WHERE category = $1",
-      values: [genre],
+      text: "SELECT * FROM albums WHERE category = $1 OFFSET $2 LIMIT $3",
+      values: [genre, itemIndex, itemsPerPage],
     };
+    const count = await client.query("SELECT COUNT(*) FROM albums WHERE category = $1", [genre]);
+    const countNum = count.rows[0].count;
     const data = await client.query(query);
-    res.status(200).json(data.rows);
+    const albumData = data.rows;
+    res
+      .send(JSON.stringify({ itemCount: countNum, albumData: albumData }))
+      .status(200);
     client.release();
   } catch (error) {
     console.error("Error getting albums by genre:", error);
     res.status(500).send("Error getting albums by genre");
   }
 };
+
