@@ -9,7 +9,6 @@ export default function RecordsLayout() {
   return (
     <PaginationProvider>
       <MainContent>
-        <Categories />
         <Outlet />
         <ShoppingCart />
       </MainContent>

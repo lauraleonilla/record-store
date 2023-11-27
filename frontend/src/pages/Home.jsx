@@ -41,6 +41,7 @@ export default function Home() {
 }
 
 const HomeContainer = styled.div`
+  grid-column: 2 / 3;
   min-width: 100%;
 `;
 
