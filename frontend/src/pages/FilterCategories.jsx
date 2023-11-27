@@ -20,6 +20,7 @@ export function FilteredCategory() {
             <CategoryHeader>{categoryName}</CategoryHeader>
           </CategoryHeaderContainer>
           <ModifiedAlbumContainer>{albumCards}</ModifiedAlbumContainer>
+          <Pagination currentPage={page} categoryName={categoryName} />
         </FilteredCategoryContainer>
       </>
     ) : (
