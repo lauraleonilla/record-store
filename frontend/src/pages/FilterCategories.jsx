@@ -12,7 +12,7 @@ export function FilteredCategory() {
   const albumCards = useAlbumData(categoryName, page);
 
   const content =
-    albumCards.length > 0 ? (
+    albumCards && albumCards.length > 0 ? (
       <>
         <Categories />
         <FilteredCategoryContainer>
