@@ -16,7 +16,7 @@ import { SearchProvider } from './context/AlbumSearchContext';
 import RecordsLayout from './components/RecordsLayout';
 import { OrderSuccess } from './pages/OrderSuccess';
 import { Payment } from './pages/Payment';
-// import { BodyWrapper } from './components/BodyWrapper,';
+import { Registration } from './pages/user/registration';
 
 const App = () => {
   return (
@@ -29,7 +29,6 @@ const App = () => {
           </Header>
           <TopBar />
           <CartProvider>
-            {/* <BodyWrapper> */}
             <Routes>
               <Route element={<RecordsLayout />}>
                 <Route path="/" element={<Home />} />
@@ -39,11 +38,13 @@ const App = () => {
                 </Route>
                 <Route path="search" element={<AlbumSearch />} />
               </Route>
+              <Route path="user">
+                <Route path="register" element={<Registration />} />
+              </Route>
               <Route path="checkout" element={<Checkout />} />
               <Route path="payment" element={<Payment />} />
               <Route path="success" element={<OrderSuccess />} />
             </Routes>
-            {/* </BodyWrapper> */}
           </CartProvider>
         </SearchProvider>
         <Footer />
@@ -66,7 +67,7 @@ const Header = styled.div`
 
 const LogoText = styled.h1`
   color: ${(props) => props.theme.ashGrey};
-  margin-bottom: -18px;
+  margin-bottom: -19px;
   font-size: 4rem;
   font-weight: 900;
   margin-top: -12px;

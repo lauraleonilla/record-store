@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AlbumContainer } from '../components/AlbumContainer';
+import { createCards } from '../hooks/useAlbumData';
+import Categories from '../Categories';
 import { useParams } from 'react-router-dom';
 import { Pagination } from '../components/Pagination';
 import useAlbumData from '../hooks/useAlbumData';
@@ -9,29 +11,31 @@ export function FilteredCategory() {
   const { categoryName, page } = useParams();
   const albumCards = useAlbumData(categoryName, page);
 
-  let content;
-
-  if (albumCards && albumCards.length > 0) {
-    content = (
-      <FilteredCategoryContainer>
-        <CategoryHeaderContainer>
-          <CategoryHeader>{categoryName}</CategoryHeader>
-        </CategoryHeaderContainer>
-        <ModifiedAlbumContainer>{albumCards}</ModifiedAlbumContainer>
-        <Pagination currentPage={page} categoryName={categoryName} />
-      </FilteredCategoryContainer>
+  const content =
+    albumCards.length > 0 ? (
+      <>
+        <Categories />
+        <FilteredCategoryContainer>
+          <CategoryHeaderContainer>
+            <CategoryHeader>{categoryName}</CategoryHeader>
+          </CategoryHeaderContainer>
+          <ModifiedAlbumContainer>{albumCards}</ModifiedAlbumContainer>
+        </FilteredCategoryContainer>
+      </>
+    ) : (
+      <>
+        <Categories />
+        <FilterContainer>
+          <p>Albumeita ei löytynyt kategoriasta: {categoryName}</p>
+        </FilterContainer>
+      </>
     );
-  } else {
-    content = (
-      <FilterContainer>
-        <p>Albumeita ei löytynyt kategoriasta: {categoryName}</p>
-      </FilterContainer>
-    );
-  }
 
   return <>{content}</>;
 }
+
 const FilteredCategoryContainer = styled.div`
+  grid-column: 2 / 3;
   min-width: 100%;
   background: ${(props) => props.theme.lightGrey};
   box-shadow: ${(props) => props.theme.shadows.smallAroundLight};

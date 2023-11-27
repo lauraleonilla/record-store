@@ -9,6 +9,8 @@ const TopBar = () => {
       <GreenBar>
         <HeaderNavLink to="/">ETUSIVU</HeaderNavLink>
         <HeaderNavLink to="/records/1">LEVYT</HeaderNavLink>
+        <LoginNavLink to="/user/register">KIRJAUDU SISÄÄN</LoginNavLink>
+        {/* vaihdetaan tilalle /login, jonka kautta ohjataan registeriin */}
       </GreenBar>
       <WhiteBar>
         <SearchField />
@@ -42,6 +44,12 @@ const GreenBar = styled.div`
 const HeaderNavLink = styled(NavLink)`
   text-decoration: none;
   margin: 0px 20px;
+`;
+
+const LoginNavLink = styled(NavLink)`
+  text-decoration: none;
+  margin-left: auto;
+  margin-right: 20px;
 `;
 
 export default TopBar;
