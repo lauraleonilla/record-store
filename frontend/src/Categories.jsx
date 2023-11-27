@@ -32,7 +32,7 @@ const Categories = () => {
                   </CategoryCard>
                 </StyledLink>
               ) : (
-                <StyledLink to={`/genre/${category.categoryname}`} key={index}>
+                <StyledLink to={`/records/genre/${category.categoryname}/1`} key={index}>
                   <CategoryCard>
                     <p>{category.categoryname}</p>
                   </CategoryCard>

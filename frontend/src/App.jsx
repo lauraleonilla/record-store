@@ -34,9 +34,9 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="records">
                   <Route path=":page" element={<CatalogPage />} />
+                  <Route path="genre/:categoryName/:page" element={<FilteredCategory />} />
                 </Route>
                 <Route path="search" element={<AlbumSearch />} />
-                <Route path="/genre/:categoryName" element={<FilteredCategory />} />
               </Route>
               <Route path="user">
                 <Route path="register" element={<Registration />} />
