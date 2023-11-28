@@ -59,7 +59,7 @@ const ShoppingCart = () => {
             </CartProducts>
           )}
           <CartFooter>
-            <TotalPrice>Yhteensä: {calculateTotalPrice()} </TotalPrice>
+            <TotalPrice>Yhteensä: {calculateTotalPrice()} €</TotalPrice>
 
             {cart.length ? <CheckoutLink to="/checkout">Kassalle</CheckoutLink> : null}
           </CartFooter>
@@ -142,8 +142,12 @@ const CartIconLeft = styled.img`
 const EmptyCartMessage = styled.div`
   display: grid;
   grid-template-columns: 3fr 1fr 1fr;
+  background-color: ${(props) => props.theme.white};
+  min-width: fit-content;
   column-gap: 1rem;
-  margin: 0.75rem;
+  padding: 1.25rem;
+  border-radius: 5px;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
 `;
 
 const CartProduct = styled.div`
