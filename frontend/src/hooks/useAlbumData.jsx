@@ -27,7 +27,7 @@ export default function useAlbumData(urlString, pageIndex) {
   useEffect(() => {
     async function getAlbumData() {
       try {
-        const res = await fetch(`http://localhost:3001/albums/${urlString}`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/albums/${urlString}`, {
           method: 'POST',
           headers: {
             'content-type': 'application/json'

@@ -10,7 +10,7 @@ const SearchField = () => {
 
   const { updateResults } = useContext(SearchContext);
   useEffect(() => {
-    const apiUrl = 'http://localhost:3001/albums/search';
+    const apiUrl = `${process.env.REACT_APP_API_URL}/albums/search`;
     const fetchData = async () => {
       let trimmedSearchTerm = searchTerm.replace(/\s+/g, ' ').trim();
       try {

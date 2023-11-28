@@ -9,7 +9,7 @@ export default function Home() {
   useEffect(() => {
     async function getAlbumData() {
       try {
-        const res = await fetch('http://localhost:3001/albums/newreleases', {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/albums/newreleases`, {
           method: 'GET',
           headers: {
             'content-type': 'application/json'
