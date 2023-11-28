@@ -10,9 +10,6 @@ const Footer = () => {
         <FooterNavLink to="/records">Levyt</FooterNavLink>
         <FooterNavLink to="/login">Kirjaudu sisään</FooterNavLink>
       </LinkWrapper>
-      <LinkWrapper>
-        <FooterNavLink to="/other">Muita tietoja</FooterNavLink>
-      </LinkWrapper>
     </Container>
   );
 };
@@ -28,7 +25,7 @@ const Container = styled.div`
 
 const LinkWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 `;
 
 const FooterNavLink = styled(NavLink)`
