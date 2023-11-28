@@ -77,4 +77,4 @@ async function postPrevDate() {
 app.post("/currentdate", postCurrentDate);
 app.post("/prevdate", postPrevDate);
 
-// TESTIFUNKTION LOPPUU
+module.exports = app;
