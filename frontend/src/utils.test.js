@@ -3,13 +3,13 @@ import { validateFormValues } from './utils';
 describe('validateFormValues', () => {
   it('should validate first name length', () => {
     const inputValues = {
-      firstName: 'A',
-      lastName: 'Smith',
-      email: 'test@example.com',
-      phoneNumber: '1234567890',
-      address: '123 Test St',
-      postalCode: '12345',
-      city: 'Test City'
+      firstName: { value: 'A', isDirty: true },
+      lastName: { value: 'Smith', isDirty: true },
+      email: { value: 'test@test.com', isDirty: true },
+      phoneNumber: { value: '047484893392', isDirty: true },
+      address: { value: 'Test street 123', isDirty: true },
+      postalCode: { value: '00990', isDirty: true },
+      city: { value: 'Citiii', isDirty: true }
     };
     const deliveryMethod = 'pickUp';
 
@@ -18,13 +18,13 @@ describe('validateFormValues', () => {
   });
   it('should validate last name length', () => {
     const inputValues = {
-      firstName: 'Aapeli',
-      lastName: 'X',
-      email: 'test@example.com',
-      phoneNumber: '1234567890',
-      address: '123 Test St',
-      postalCode: '12345',
-      city: 'Test City'
+      firstName: { value: 'Aapeli', isDirty: true },
+      lastName: { value: 'X', isDirty: true },
+      email: { value: 'test@test.com', isDirty: true },
+      phoneNumber: { value: '047484893392', isDirty: true },
+      address: { value: 'Test street 123', isDirty: true },
+      postalCode: { value: '00990', isDirty: true },
+      city: { value: 'Citiii', isDirty: true }
     };
     const deliveryMethod = 'pickUp';
 
@@ -33,13 +33,13 @@ describe('validateFormValues', () => {
   });
   it('should validate email', () => {
     const inputValues = {
-      firstName: 'Aapeli',
-      lastName: 'Xexe',
-      email: 'test@',
-      phoneNumber: '1234567890',
-      address: '123 Test St',
-      postalCode: '12345',
-      city: 'Test City'
+      firstName: { value: 'Aapeli', isDirty: true },
+      lastName: { value: 'Xexe', isDirty: true },
+      email: { value: 'test.com', isDirty: true },
+      phoneNumber: { value: 'abc', isDirty: true },
+      address: { value: 'Test street 123', isDirty: true },
+      postalCode: { value: '00990', isDirty: true },
+      city: { value: 'Citiii', isDirty: true }
     };
     const deliveryMethod = 'pickUp';
 
@@ -48,13 +48,13 @@ describe('validateFormValues', () => {
   });
   it('should validate phone number', () => {
     const inputValues = {
-      firstName: 'Aapeli',
-      lastName: 'Xexe',
-      email: 'test@mail.com',
-      phoneNumber: 'abc',
-      address: '123 Test St',
-      postalCode: '12345',
-      city: 'Test City'
+      firstName: { value: 'Aapeli', isDirty: true },
+      lastName: { value: 'Xexe', isDirty: true },
+      email: { value: 'test@mail.com', isDirty: true },
+      phoneNumber: { value: 'abc', isDirty: true },
+      address: { value: 'Test street 123', isDirty: true },
+      postalCode: { value: '00990', isDirty: true },
+      city: { value: 'Citiii', isDirty: true }
     };
     const deliveryMethod = 'pickUp';
 
@@ -63,13 +63,13 @@ describe('validateFormValues', () => {
   });
   it('should validate address if delivery method is home delivery', () => {
     const inputValues = {
-      firstName: 'Aapeli',
-      lastName: 'Xexe',
-      email: 'test@mail.com',
-      phoneNumber: 'abc',
-      address: 'xxx 1',
-      postalCode: '123',
-      city: 'X'
+      firstName: { value: 'Aapeli', isDirty: true },
+      lastName: { value: 'Xexe', isDirty: true },
+      email: { value: 'test@mail.com', isDirty: true },
+      phoneNumber: { value: '098765554443', isDirty: true },
+      address: { value: 'Test', isDirty: true },
+      postalCode: { value: '0', isDirty: true },
+      city: { value: 'X', isDirty: true }
     };
     const deliveryMethod = 'homeDelivery';
 
@@ -80,13 +80,13 @@ describe('validateFormValues', () => {
   });
   it('should return empty object if no errors were found', () => {
     const inputValues = {
-      firstName: 'Aapeli',
-      lastName: 'Xexe',
-      email: 'test@mail.com',
-      phoneNumber: '098765554443',
-      address: 'Test street 123',
-      postalCode: '00990',
-      city: 'Helsinki'
+      firstName: { value: 'Aapeli', isDirty: true },
+      lastName: { value: 'Xexe', isDirty: true },
+      email: { value: 'test@mail.com', isDirty: true },
+      phoneNumber: { value: '098765554443', isDirty: true },
+      address: { value: 'Test street 123', isDirty: true },
+      postalCode: { value: '00990', isDirty: true },
+      city: { value: 'Helsinki', isDirty: true }
     };
     const deliveryMethod = 'homeDelivery';
 

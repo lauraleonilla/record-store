@@ -14,28 +14,23 @@ export const Checkout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const initialErrors = validateFormValues(orderDetails, deliveryMethod);
-    setErrors(initialErrors);
-  }, []);
-
-  useEffect(() => {
     if (deliveryMethod === 'homeDelivery') {
       updateOrderDetails({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: '',
-        address: '',
-        postalCode: '',
-        city: ''
+        firstName: { value: '', isDirty: false },
+        lastName: { value: '', isDirty: false },
+        email: { value: '', isDirty: false },
+        phoneNumber: { value: '', isDirty: false },
+        address: { value: '', isDirty: false },
+        postalCode: { value: '', isDirty: false },
+        city: { value: '', isDirty: false }
       });
     }
     if (deliveryMethod === 'pickUp') {
       updateOrderDetails({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: ''
+        firstName: { value: '', isDirty: false },
+        lastName: { value: '', isDirty: false },
+        email: { value: '', isDirty: false },
+        phoneNumber: { value: '', isDirty: false }
       });
     }
   }, [deliveryMethod]);
@@ -45,13 +40,17 @@ export const Checkout = () => {
   };
 
   const handleChange = (e) => {
-    updateOrderDetails({ ...orderDetails, [e.target.name]: e.target.value });
+    updateOrderDetails({
+      ...orderDetails,
+      [e.target.name]: { value: e.target.value, isDirty: true }
+    });
   };
 
   const validateInputFields = () => {
     const inputErrors = validateFormValues(orderDetails, deliveryMethod);
     setErrors(inputErrors);
-    if (!Object.values(inputErrors).length) {
+    const isFieldDirty = (field) => field.isDirty;
+    if (Object.values(orderDetails).every(isFieldDirty) && !Object.values(inputErrors).length) {
       setButtonDisabled(false);
     } else if (Object.values(inputErrors).length) {
       setButtonDisabled(true);
@@ -85,58 +84,79 @@ export const Checkout = () => {
           <Standard>Nouto myymälästä</Standard>
         </RadioButtonContainer>
         <StandardBold>Henkilötiedot</StandardBold>
-        <FormInput
-          description={'Etunimi*'}
-          value={orderDetails.firstName}
-          onChange={handleChange}
-          onBlur={validateInputFields}
-          name="firstName"
-        />
-        <FormInput
-          description={'Sukunimi*'}
-          value={orderDetails.lastName}
-          onChange={handleChange}
-          onBlur={validateInputFields}
-          name="lastName"
-        />
-        <FormInput
-          description={'Sähköposti*'}
-          value={orderDetails.email}
-          onChange={handleChange}
-          onBlur={validateInputFields}
-          name="email"
-        />
-        <FormInput
-          description={'Puhelinnumero'}
-          value={orderDetails.phoneNumber}
-          onChange={handleChange}
-          onBlur={validateInputFields}
-          name="phoneNumber"
-        />
+        <InputWrapper>
+          <FormInput
+            description={'Etunimi*'}
+            value={orderDetails.firstName.value}
+            onChange={handleChange}
+            onBlur={validateInputFields}
+            name="firstName"
+          />
+          <ErrorMessage>{errors.firstName || null}</ErrorMessage>
+        </InputWrapper>
+        <InputWrapper>
+          <FormInput
+            description={'Sukunimi*'}
+            value={orderDetails.lastName.value}
+            onChange={handleChange}
+            onBlur={validateInputFields}
+            name="lastName"
+          />
+          <ErrorMessage>{errors.lastName || null}</ErrorMessage>
+        </InputWrapper>
+        <InputWrapper>
+          <FormInput
+            description={'Sähköposti*'}
+            value={orderDetails.email.value}
+            onChange={handleChange}
+            onBlur={validateInputFields}
+            name="email"
+          />
+          <ErrorMessage>{errors.email || null}</ErrorMessage>
+        </InputWrapper>
+        <InputWrapper>
+          <FormInput
+            description={'Puhelinnumero'}
+            value={orderDetails.phoneNumber.value}
+            onChange={handleChange}
+            onBlur={validateInputFields}
+            name="phoneNumber"
+          />
+          <ErrorMessage>{errors.phoneNumber || null}</ErrorMessage>
+        </InputWrapper>
         {deliveryMethod === 'homeDelivery' ? (
           <AddressContainer>
             <StandardBold>Toimitusosoite</StandardBold>
-            <FormInput
-              description={'Katuosoite*'}
-              value={orderDetails.address}
-              onChange={handleChange}
-              onBlur={validateInputFields}
-              name="address"
-            />
-            <FormInput
-              description={'Postinumero*'}
-              value={orderDetails.postalCode}
-              onChange={handleChange}
-              onBlur={validateInputFields}
-              name="postalCode"
-            />
-            <FormInput
-              description={'Toimipaikka*'}
-              value={orderDetails.city}
-              onChange={handleChange}
-              onBlur={validateInputFields}
-              name="city"
-            />
+            <InputWrapper>
+              <FormInput
+                description={'Katuosoite*'}
+                value={orderDetails.address.value}
+                onChange={handleChange}
+                onBlur={validateInputFields}
+                name="address"
+              />
+              <ErrorMessage>{errors.address || null}</ErrorMessage>
+            </InputWrapper>
+            <InputWrapper>
+              <FormInput
+                description={'Postinumero*'}
+                value={orderDetails.postalCode.value}
+                onChange={handleChange}
+                onBlur={validateInputFields}
+                name="postalCode"
+              />
+              <ErrorMessage>{errors.postalCode || null}</ErrorMessage>
+            </InputWrapper>
+            <InputWrapper>
+              <FormInput
+                description={'Toimipaikka*'}
+                value={orderDetails.city.value}
+                onChange={handleChange}
+                onBlur={validateInputFields}
+                name="city"
+              />
+              <ErrorMessage>{errors.city || null}</ErrorMessage>
+            </InputWrapper>
           </AddressContainer>
         ) : null}
       </InnerContainer>
@@ -163,8 +183,14 @@ const InnerContainer = styled.div`
   justify-content: flex-start;
 `;
 
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const ErrorMessage = styled.p`
   color: ${(props) => props.theme.red};
+  margin-left: 20px;
 `;
 
 const HeaderContainer = styled.div`
