@@ -17,6 +17,8 @@ import RecordsLayout from './components/RecordsLayout';
 import { OrderSuccess } from './pages/OrderSuccess';
 import { Payment } from './pages/Payment';
 import { Registration } from './pages/user/registration';
+import { LoginForm } from './pages/user/Login';
+import { LoginLayout } from './pages/user/LoginLayout';
 
 const App = () => {
   return (
@@ -38,8 +40,11 @@ const App = () => {
                 <Route path="search" element={<AlbumSearch />} />
                 <Route path="/genre/:categoryName" element={<FilteredCategory />} />
               </Route>
-              <Route path="user">
-                <Route path="register" element={<Registration />} />
+              <Route element={<LoginLayout />}>
+                <Route path="user">
+                  <Route path="register" element={<Registration />} />
+                  <Route path="login" element={<LoginForm />} />
+                </Route>
               </Route>
               <Route path="checkout" element={<Checkout />} />
               <Route path="payment" element={<Payment />} />
