@@ -34,7 +34,7 @@ export const Payment = () => {
   };
 
   const submitOrder = async () => {
-    const apiUrl = 'http://localhost:3001/main/order';
+    const apiUrl = `${process.env.REACT_APP_API_URL}/main/order`;
     try {
       const res = await axios.post(apiUrl, {
         ...orderDetails,
