@@ -25,7 +25,9 @@ For the frontend:
 
 You will need to create a file called .env.local in the root of the frontend folder, with contents:
 
+```
 REACT_APP_API_URL="http://localhost:3001"
+```
 
 ```
 cd frontend 
