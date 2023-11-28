@@ -67,9 +67,11 @@ export function LoginForm() {
           console.log(response);
           if (response === 'incorrect email') {
             setErrors({ email: 'Sähköpostilla ei löydy käyttäjää.' });
+            return;
           }
           if (response === 'incorrect password') {
             setErrors({ password: 'Väärä salasana' });
+            return;
           }
           navigate('/');
           updateUser(response);
