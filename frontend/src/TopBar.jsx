@@ -9,8 +9,7 @@ const TopBar = () => {
       <GreenBar>
         <HeaderNavLink to="/">ETUSIVU</HeaderNavLink>
         <HeaderNavLink to="/records/1">LEVYT</HeaderNavLink>
-        <LoginNavLink to="/user/register">KIRJAUDU SISÄÄN</LoginNavLink>
-        {/* vaihdetaan tilalle /login, jonka kautta ohjataan registeriin */}
+        <LoginNavLink to="/user/login">KIRJAUDU SISÄÄN</LoginNavLink>
       </GreenBar>
       <WhiteBar>
         <SearchField />
