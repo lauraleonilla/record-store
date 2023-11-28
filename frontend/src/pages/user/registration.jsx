@@ -39,25 +39,26 @@ const InputField = styled.input`
 
 export function Registration() {
   const navigate = useNavigate();
+  const [formError, setFormError] = useState();
   const [inputValues, setInputvalues] = useState({
     firstName: '',
     lastName: '',
-    address: '',
+    street: '',
     postalCode: '',
     city: '',
     email: '',
-    phoneNumber: '',
+    phoneNum: '',
     password: '',
     confirmPassword: ''
   });
   const [errors, setErrors] = useState({
     firstName: '',
     lastName: '',
-    address: '',
+    street: '',
     postalCode: '',
     city: '',
     email: '',
-    phoneNumber: '',
+    phoneNum: '',
     password: '',
     confirmPassword: ''
   });
@@ -66,6 +67,7 @@ export function Registration() {
     const { name, value } = e.target;
     setInputvalues({ ...inputValues, [name]: value });
     setErrors({ ...errors, [name]: '' });
+    setFormError('');
   }
 
   function validateInput(e) {
@@ -82,9 +84,9 @@ export function Registration() {
             setErrors({ ...errors, lastName: 'Sukunimi on liian lyhyt (väh. 2 merkkiä)' });
           }
           break;
-        case 'address':
+        case 'street':
           if (value.length < 10) {
-            setErrors({ ...errors, address: 'Osoite on liian lyhyt (väh. 10 merkkiä)' });
+            setErrors({ ...errors, street: 'Osoite on liian lyhyt (väh. 10 merkkiä)' });
           }
           break;
         case 'postalCode':
@@ -102,9 +104,9 @@ export function Registration() {
             setErrors({ ...errors, email: 'Sähköposti ei ole kelvollinen' });
           }
           break;
-        case 'phoneNumber':
+        case 'phoneNum':
           if (!validator.isMobilePhone(value)) {
-            setErrors({ ...errors, phoneNumber: 'Numero ei ole kelvollinen' });
+            setErrors({ ...errors, phoneNum: 'Numero ei ole kelvollinen' });
           }
           break;
         case 'password':
@@ -154,6 +156,8 @@ export function Registration() {
       confirmPassword.length > 0
     ) {
       return true;
+    } else {
+      setFormError('Täytä vähintään tähdellä merkityt kentät.');
     }
   }
 
@@ -175,11 +179,11 @@ export function Registration() {
         setInputvalues({
           firstName: '',
           lastName: '',
-          address: '',
+          street: '',
           postalCode: '',
           city: '',
           email: '',
-          phoneNumber: '',
+          phoneNum: '',
           password: '',
           confirmPassword: ''
         });
@@ -211,9 +215,9 @@ export function Registration() {
         />
         <Input
           labelName={'Osoite'}
-          id={'address'}
-          value={inputValues.address}
-          error={errors.address}
+          id={'street'}
+          value={inputValues.street}
+          error={errors.street}
           onChange={handleChange}
           onBlur={validateInput}
         />
@@ -246,9 +250,9 @@ export function Registration() {
         />
         <Input
           labelName={'Puhelinnumero'}
-          id={'phoneNumber'}
-          value={inputValues.phoneNumber}
-          error={errors.phoneNumber}
+          id={'phoneNum'}
+          value={inputValues.phoneNum}
+          error={errors.phoneNum}
           onChange={handleChange}
           onBlur={validateInput}
         />
@@ -270,6 +274,7 @@ export function Registration() {
           onChange={handleChange}
           onBlur={validateInput}
         />
+        <FormError>{formError}</FormError>
         <ButtonWrapper>
           <Button $primary={true} type="submit">
             Rekisteröidy
@@ -282,6 +287,11 @@ export function Registration() {
     </>
   );
 }
+
+const FormError = styled.div`
+  height: 1rem;
+  color: red;
+`;
 
 export const FormHeader = styled.header`
   font-size: 2rem;

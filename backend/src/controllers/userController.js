@@ -1,5 +1,5 @@
 import { pool } from '../../api/index.js';
-import bcrypt from 'bcrypt';
+import bcrypt, { hash } from 'bcrypt';
 
 async function connectClientToPool() {
   try {
@@ -10,42 +10,42 @@ async function connectClientToPool() {
   }
 }
 
-export async function validateEmail(req, res) {
-  let client = null;
-  const email = req.body.email;
-  try {
-    client = await pool.connect();
-  } catch (err) {
-    console.log('Error connecting to database: ', err);
-    return;
+function filterEmptyValues(object) {
+  const newObject = {};
+  for (const key in object) {
+    if (object[key] !== '' && key !== 'confirmPassword') {
+      newObject[key] = object[key];
+    }
   }
-  try {
-    const emailData = await client.query('SELECT email FROM users WHERE email = $1', [email]);
-    res.send(JSON.stringify(emailData.rows)).status(200);
-  } catch (err) {
-    console.error('Error while validating email:', err);
-  } finally {
-    client.release();
-  }
+  return newObject;
+}
+
+async function createQueryParams(userDetails) {
+  const columns = Object.keys(userDetails);
+  const queryPlaceholders = columns.map((_, index) => `$${index + 1}`);
+
+  const queryText = `INSERT INTO users (${columns.join(', ')}) VALUES (${queryPlaceholders.join(
+    ', '
+  )}) RETURNING *`;
+  return queryText;
 }
 
 export async function registerUser(req, res) {
-  const { email, firstName, lastName, address, postalCode, city, phoneNumber, password } = req.body;
+  const userDetails = req.body;
+  const filteredObject = filterEmptyValues(userDetails);
+  const hashedPw = await bcrypt.hash(filteredObject.password, 10);
+  filteredObject.password = hashedPw;
+  const values = Object.values(filteredObject);
+  const text = await createQueryParams(filteredObject);
   let client = null;
+  client = await connectClientToPool();
+  // console.log(values);
+  // console.log(text);
+
   try {
-    client = await pool.connect();
-  } catch (err) {
-    console.log('Error connecting to database: ', err);
-    return;
-  }
-  const hashedPw = await bcrypt.hash(password, 10);
-  const query = {
-    text: 'INSERT INTO users (email, firstName, lastName, street, postalCode, city, phoneNum, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-    values: [email, firstName, lastName, address, postalCode, city, phoneNumber, hashedPw],
-  };
-  try {
-    const createdUser = await client.query(query);
+    const createdUser = await client.query(text, values);
     res.send(JSON.stringify(createdUser.rows)).status(200);
+    console.log(createdUser.rows);
   } catch (err) {
     console.error('Error when registering new user to db: ', err);
   } finally {
@@ -73,6 +73,25 @@ export async function loginUser(req, res) {
     res.send(JSON.stringify(email)).status(200);
   } catch (err) {
     console.error('Error logging in user:', err);
+  } finally {
+    client.release();
+  }
+}
+
+export async function validateEmail(req, res) {
+  let client = null;
+  const email = req.body.email;
+  try {
+    client = await pool.connect();
+  } catch (err) {
+    console.log('Error connecting to database: ', err);
+    return;
+  }
+  try {
+    const emailData = await client.query('SELECT email FROM users WHERE email = $1', [email]);
+    res.send(JSON.stringify(emailData.rows)).status(200);
+  } catch (err) {
+    console.error('Error while validating email:', err);
   } finally {
     client.release();
   }
