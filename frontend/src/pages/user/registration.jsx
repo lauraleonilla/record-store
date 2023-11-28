@@ -185,6 +185,7 @@ export function Registration() {
           password: '',
           confirmPassword: ''
         });
+        navigate('../login');
       }
     }
   }
