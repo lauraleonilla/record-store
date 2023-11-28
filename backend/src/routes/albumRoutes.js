@@ -14,6 +14,6 @@ router.post('/all', getAllAlbums);
 
 router.post('/search', searchAlbums);
 
-router.get('/:genre', getAlbumsByGenre);
+router.post('/:genre', getAlbumsByGenre);
 
 export default router;
