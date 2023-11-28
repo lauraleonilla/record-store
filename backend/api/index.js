@@ -77,4 +77,4 @@ async function postPrevDate() {
 app.post("/currentdate", postCurrentDate);
 app.post("/prevdate", postPrevDate);
 
-module.exports = app;
+export default app;
