@@ -1,4 +1,4 @@
-import { pool } from "../../index.js";
+import { pool } from "../../api/index.js";
 
 export async function getNewReleases(req, res) {
   const client = await pool.connect();
@@ -73,7 +73,10 @@ export const getAlbumsByGenre = async (req, res) => {
       text: "SELECT * FROM albums WHERE category = $1 OFFSET $2 LIMIT $3",
       values: [genre, itemIndex, itemsPerPage],
     };
-    const count = await client.query("SELECT COUNT(*) FROM albums WHERE category = $1", [genre]);
+    const count = await client.query(
+      "SELECT COUNT(*) FROM albums WHERE category = $1",
+      [genre]
+    );
     const countNum = count.rows[0].count;
     const data = await client.query(query);
     const albumData = data.rows;
@@ -86,4 +89,3 @@ export const getAlbumsByGenre = async (req, res) => {
     res.status(500).send("Error getting albums by genre");
   }
 };
-

@@ -2,9 +2,9 @@ import cors from "cors";
 import pkg from "pg";
 import express from "express";
 import dotenv from "dotenv";
-import router from "./src/routes/albumRoutes.js";
-import mainRouter from "./src/routes/mainRoutes.js";
-import userRouter from "./src/routes/userRoutes.js";
+import router from "../src/routes/albumRoutes.js";
+import mainRouter from "../src/routes/mainRoutes.js";
+import userRouter from "../src/routes/userRoutes.js";
 
 dotenv.config();
 
