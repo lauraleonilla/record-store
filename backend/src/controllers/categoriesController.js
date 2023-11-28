@@ -1,4 +1,4 @@
-import { pool } from "../../index.js";
+import { pool } from "../../api/index.js";
 
 export const getCategories = async (req, res) => {
   let client = null;

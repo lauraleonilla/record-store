@@ -1,4 +1,4 @@
-import { pool } from "../../index.js";
+import { pool } from "../../api/index.js";
 import bcrypt from "bcryptjs";
 
 export async function validateEmail(req, res) {
