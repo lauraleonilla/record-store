@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Input, Form, FormHeader, ButtonWrapper, Button } from './registration';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { UserContext } from '../../context/UserContext';
 import validator from 'validator';
 
 function validateForm(e, pw) {
@@ -31,8 +32,11 @@ function validateForm(e, pw) {
 }
 
 export function LoginForm() {
+  const navigate = useNavigate();
+  const { updateUser } = useContext(UserContext);
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -45,49 +49,45 @@ export function LoginForm() {
   }
 
   async function handleSubmit(e) {
-    // e.preventDefault();
-    const noErrors = Object.values(errors).every((value) => value === '');
-
-    // if (noErrors) {
-    try {
-      // const loginData = await fetch('https://localhost:3001/user/login', {
-      //   method: 'POST',
-      //   headers: {
-      //     'content-type': 'application/json'
-      //   },
-      //   body: { loginDetails: formValues }
-      // });
-      // if (loginData.ok) {
-      //   console.log('login successful');
-      // }
-      console.log('logging in...');
-    } catch (err) {
-      console.error('Error when trying to login:', err);
-      // }
-    }
-  }
-
-  function debouncer(func, delay) {
-    let timeout;
-    return function () {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        func();
-      }, delay);
-    };
-  }
-
-  const debouncedSubmit = debouncer(handleSubmit, 1000);
-
-  function submit(e) {
     e.preventDefault();
-    debouncedSubmit();
+    setIsLoading(true);
+    const noErrors = Object.values(errors).every((value) => value === '');
+    const noEmptyFields = Object.values(formValues).every((value) => value !== '');
+    if (noErrors && noEmptyFields) {
+      try {
+        const loginData = await fetch('http://localhost:3001/users/login', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(formValues)
+        });
+        if (loginData.ok) {
+          const response = await loginData.json();
+          console.log(response);
+          if (response === 'incorrect email') {
+            setErrors({ email: 'Sähköpostilla ei löydy käyttäjää.' });
+          }
+          if (response === 'incorrect password') {
+            setErrors({ password: 'Väärä salasana' });
+          }
+          navigate('/');
+          updateUser(response);
+        }
+      } catch (err) {
+        console.error('Error when trying to login:', err);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }
+    }
   }
 
   return (
     <>
       <FormHeader>Kirjaudu sisään</FormHeader>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Input
           labelName={'sähköposti'}
           id={'email'}
@@ -106,7 +106,7 @@ export function LoginForm() {
           onBlur={validateInput}
         />
         <ButtonWrapper>
-          <Button $primary onClick={submit}>
+          <Button $primary disabled={isLoading}>
             Kirjaudu
           </Button>
         </ButtonWrapper>

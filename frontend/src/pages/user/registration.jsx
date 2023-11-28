@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import validator from 'validator';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Input({ type, labelName, id, value, onChange, onBlur, error }) {
   return (
@@ -38,6 +38,7 @@ const InputField = styled.input`
 `;
 
 export function Registration() {
+  const navigate = useNavigate();
   const [inputValues, setInputvalues] = useState({
     firstName: '',
     lastName: '',
@@ -158,31 +159,37 @@ export function Registration() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     const checkIfErrors = Object.values(errors).every((value) => value === '');
     const checkIfNotEmpty = checkEmptyFields();
 
     if (checkIfErrors && checkIfNotEmpty) {
-      const res = await fetch('http://localhost:3001/users/register', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(inputValues)
-      });
-      if (res.ok) {
-        const data = res.json();
-        console.log(data);
-        setInputvalues({
-          firstName: '',
-          lastName: '',
-          address: '',
-          postalCode: '',
-          city: '',
-          email: '',
-          phoneNumber: '',
-          password: '',
-          confirmPassword: ''
+      try {
+        const res = await fetch('http://localhost:3001/users/register', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(inputValues)
         });
+        if (res.ok) {
+          const data = res.json();
+          console.log(data);
+          setInputvalues({
+            firstName: '',
+            lastName: '',
+            address: '',
+            postalCode: '',
+            city: '',
+            email: '',
+            phoneNumber: '',
+            password: '',
+            confirmPassword: ''
+          });
+          navigate('../login');
+        }
+      } catch (err) {
+        console.error('Registration error:', err);
       }
     }
   }
