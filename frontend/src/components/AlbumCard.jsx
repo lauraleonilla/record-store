@@ -8,6 +8,10 @@ export default function AlbumCard({ albumName, artist, productType, price, album
     const album = { albumName, artist, productType, price };
     addToCart(album);
   };
+  const convertPriceToEuros = (price) => {
+    const numericPrice = parseFloat(price.replace('$', ''));
+    return numericPrice.toFixed(2) + '€';
+  };
 
   return (
     <CardContainer>
@@ -17,7 +21,7 @@ export default function AlbumCard({ albumName, artist, productType, price, album
         <Artist>{artist}</Artist>
         <BottomRow>
           <ProductType>{productType}</ProductType>
-          <Price>{price}</Price>
+          <Price>{convertPriceToEuros(price)}</Price>
         </BottomRow>
       </AlbumInfo>
       <AddToCartBtn onClick={handleAddToCart}>Lisää koriin</AddToCartBtn>
