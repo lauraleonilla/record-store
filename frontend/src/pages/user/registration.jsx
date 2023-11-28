@@ -172,8 +172,6 @@ export function Registration() {
         body: JSON.stringify(inputValues)
       });
       if (res.ok) {
-        const data = res.json();
-        console.log(data);
         setInputvalues({
           firstName: '',
           lastName: '',
@@ -315,6 +313,17 @@ export const Button = styled.button`
   border-radius: 3px;
   font-weight: bold;
   box-shadow: grey 2px 2px 2px 0px;
+  transition: 50ms ease-out;
+  &:hover {
+    transition: 50ms ease-in;
+    background: ${(props) =>
+      props.$primary ? props.theme.lightOrange : props.theme.highlightGrey};
+  }
+  &:active {
+    transition: 50ms ease-in;
+    background: ${(props) =>
+      props.$primary ? props.theme.extraLightOrange : props.theme.lightGrey};
+  }
 `;
 
 const BackLink = styled(Link)``;
