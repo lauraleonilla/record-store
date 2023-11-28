@@ -35,27 +35,31 @@ const ShoppingCart = () => {
             <CartIconLeft src={ArrayRight} alt="Right Array" />
             Ostoskori {numItemsInCart}
           </CloseCartButton>
-
-          <CartProducts>
-            {cart.map((item, index) => (
-              <CartProduct key={index}>
-                <Album>{item.albumName}</Album>
-                <Artist>{item.artist}</Artist>
-                <ProductType>{item.productType}</ProductType>
-                <Price>{item.price}</Price>
-                <DeleteIconHolder>
-                  <DeleteIcon
-                    onClick={() => deleteCartItem(index)}
-                    src={TrashCan}
-                    alt="Trash Icon"
-                  />
-                </DeleteIconHolder>
-              </CartProduct>
-            ))}
-          </CartProducts>
-
+          {cart.length === 0 ? (
+            <CartProducts>
+              <EmptyCartMessage>Ostoskori on tyhjä.</EmptyCartMessage>
+            </CartProducts>
+          ) : (
+            <CartProducts>
+              {cart.map((item, index) => (
+                <CartProduct key={index}>
+                  <Album>{item.albumName}</Album>
+                  <Artist>{item.artist}</Artist>
+                  <ProductType>{item.productType}</ProductType>
+                  <Price>{item.price}</Price>
+                  <DeleteIconHolder>
+                    <DeleteIcon
+                      onClick={() => deleteCartItem(index)}
+                      src={TrashCan}
+                      alt="Trash Icon"
+                    />
+                  </DeleteIconHolder>
+                </CartProduct>
+              ))}
+            </CartProducts>
+          )}
           <CartFooter>
-            <TotalPrice>Yhteensä: {calculateTotalPrice()} </TotalPrice>
+            <TotalPrice>Yhteensä: {calculateTotalPrice()} €</TotalPrice>
 
             {cart.length ? <CheckoutLink to="/checkout">Kassalle</CheckoutLink> : null}
           </CartFooter>
@@ -90,7 +94,7 @@ const CartIconRight = styled.img`
 `;
 
 const CartContainer = styled.div`
-  background-color: ${(props) => props.theme.white};
+  background-color: ${(props) => props.theme.lightGrey};
   height: 60svh;
   display: flex;
   flex-direction: column;
@@ -133,6 +137,17 @@ const CartIconLeft = styled.img`
   width: 15px;
   height: 15px;
   margin-right: 10px;
+`;
+
+const EmptyCartMessage = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  background-color: ${(props) => props.theme.white};
+  min-width: fit-content;
+  column-gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 5px;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
 `;
 
 const CartProduct = styled.div`
