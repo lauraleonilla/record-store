@@ -10,14 +10,18 @@ const TopBar = () => {
   return (
     <Container>
       <GreenBar>
-        <HeaderNavLink to="/">ETUSIVU</HeaderNavLink>
-        <HeaderNavLink to="/records/1">LEVYT</HeaderNavLink>
-        <Usertext>{user}</Usertext>
-        {user ? (
-          <LoginNavLink onClick={() => updateUser(null)}>KIRJAUDU ULOS</LoginNavLink>
-        ) : (
-          <LoginNavLink to="/user/login">KIRJAUDU SISÄÄN</LoginNavLink>
-        )}
+        <Navlinks>
+          <HeaderNavLink to="/">ETUSIVU</HeaderNavLink>
+          <HeaderNavLink to="/records/1">LEVYT</HeaderNavLink>
+        </Navlinks>
+        <UserControls>
+          <Usertext>{user}</Usertext>
+          {user ? (
+            <LoginNavLink onClick={() => updateUser(null)}>KIRJAUDU ULOS</LoginNavLink>
+          ) : (
+            <LoginNavLink to="/user/login">KIRJAUDU SISÄÄN</LoginNavLink>
+          )}
+        </UserControls>
       </GreenBar>
       <WhiteBar>
         <SearchField />
@@ -44,24 +48,29 @@ const WhiteBar = styled.div`
 const GreenBar = styled.div`
   background-color: ${(props) => props.theme.ashGrey};
   display: flex;
-  align-items: center;
-  padding: 0.75rem;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+`;
+const Navlinks = styled.div`
+  display: flex;
+  gap: 2rem;
+`;
+const UserControls = styled.div`
+  display: flex;
+  gap: 1rem;
 `;
 
 const HeaderNavLink = styled(NavLink)`
   text-decoration: none;
-  margin: 0px 20px;
 `;
 
 const LoginNavLink = styled(NavLink)`
   text-decoration: none;
-  margin-left: auto;
-  margin-right: 20px;
 `;
 
 const Usertext = styled.span`
-  margin-left: auto;
-  margin-right: 10px;
+  margin-top: auto;
+  font-size: 0.85rem;
 `;
 
 export default TopBar;
