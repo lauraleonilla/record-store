@@ -1,4 +1,4 @@
-import { pool } from '../../index.js';
+import { pool } from '../../api/index.js';
 import bcrypt from 'bcrypt';
 
 async function connectClientToPool() {
