@@ -10,7 +10,7 @@ export default function AlbumCard({ albumName, artist, productType, price, album
   };
   const convertPriceToEuros = (price) => {
     const numericPrice = parseFloat(price.replace('$', ''));
-    return numericPrice.toFixed(2) + '€';
+    return numericPrice.toFixed(2) + ' €';
   };
 
   return (
