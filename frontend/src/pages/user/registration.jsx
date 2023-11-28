@@ -124,7 +124,7 @@ export function Registration() {
     if (validator.isEmail(inputValues.email)) {
       const { email } = inputValues;
       try {
-        const res = await fetch('http://localhost:3001/users/validateemail', {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/users/validateemail`, {
           method: 'POST',
           headers: {
             'content-type': 'application/json'
@@ -162,7 +162,7 @@ export function Registration() {
     const checkIfNotEmpty = checkEmptyFields();
 
     if (checkIfErrors && checkIfNotEmpty) {
-      const res = await fetch('http://localhost:3001/users/register', {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json'

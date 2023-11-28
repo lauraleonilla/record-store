@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { AlbumContainer } from '../components/AlbumContainer';
-import { createCards } from '../hooks/useAlbumData';
 import Categories from '../Categories';
 import { useParams } from 'react-router-dom';
 import { Pagination } from '../components/Pagination';
