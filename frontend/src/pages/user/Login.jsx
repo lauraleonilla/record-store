@@ -55,7 +55,7 @@ export function LoginForm() {
     const noEmptyFields = Object.values(formValues).every((value) => value !== '');
     if (noErrors && noEmptyFields) {
       try {
-        const loginData = await fetch('http://localhost:3001/users/login', {
+        const loginData = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
           method: 'POST',
           headers: {
             'content-type': 'application/json'
