@@ -21,6 +21,11 @@ const ShoppingCart = () => {
     setCartVisible(false);
   };
 
+  const convertPriceToEuros = (price) => {
+    const numericPrice = parseFloat(price.replace('$', ''));
+    return numericPrice.toFixed(2) + ' €';
+  };
+
   return (
     <ComponentContainer>
       {openCartButtonVisible && (
@@ -46,7 +51,7 @@ const ShoppingCart = () => {
                   <Album>{item.albumName}</Album>
                   <Artist>{item.artist}</Artist>
                   <ProductType>{item.productType}</ProductType>
-                  <Price>{item.price}</Price>
+                  <Price>{convertPriceToEuros(item.price)}</Price>
                   <DeleteIconHolder>
                     <DeleteIcon
                       onClick={() => deleteCartItem(index)}
