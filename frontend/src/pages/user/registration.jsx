@@ -125,7 +125,7 @@ export function Registration() {
     if (validator.isEmail(inputValues.email)) {
       const { email } = inputValues;
       try {
-        const res = await fetch('http://localhost:3001/users/validateemail', {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/users/validateemail`, {
           method: 'POST',
           headers: {
             'content-type': 'application/json'
@@ -164,32 +164,27 @@ export function Registration() {
     const checkIfNotEmpty = checkEmptyFields();
 
     if (checkIfErrors && checkIfNotEmpty) {
-      try {
-        const res = await fetch('http://localhost:3001/users/register', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify(inputValues)
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(inputValues)
+      });
+      if (res.ok) {
+        const data = res.json();
+        console.log(data);
+        setInputvalues({
+          firstName: '',
+          lastName: '',
+          address: '',
+          postalCode: '',
+          city: '',
+          email: '',
+          phoneNumber: '',
+          password: '',
+          confirmPassword: ''
         });
-        if (res.ok) {
-          const data = res.json();
-          console.log(data);
-          setInputvalues({
-            firstName: '',
-            lastName: '',
-            address: '',
-            postalCode: '',
-            city: '',
-            email: '',
-            phoneNumber: '',
-            password: '',
-            confirmPassword: ''
-          });
-          navigate('../login');
-        }
-      } catch (err) {
-        console.error('Registration error:', err);
       }
     }
   }

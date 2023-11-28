@@ -7,7 +7,7 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const apiUrl = 'http://localhost:3001/main/categories';
+    const apiUrl = `${process.env.REACT_APP_API_URL}/main/categories`;
     const fetchCategories = async () => {
       try {
         const response = await axios.get(apiUrl);

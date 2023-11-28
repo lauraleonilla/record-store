@@ -14,13 +14,13 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [orderDetails, setOrderDetails] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    address: '',
-    postalCode: '',
-    city: ''
+    firstName: { value: '', isDirty: false },
+    lastName: { value: '', isDirty: false },
+    email: { value: '', isDirty: false },
+    phoneNumber: { value: '', isDirty: false },
+    address: { value: '', isDirty: false },
+    postalCode: { value: '', isDirty: false },
+    city: { value: '', isDirty: false }
   });
 
   const saveCartToLocalStorage = (updatedCart) => {

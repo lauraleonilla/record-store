@@ -1,5 +1,5 @@
 import { pool } from '../../index.js';
-import bcrypt, { hash } from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 async function connectClientToPool() {
   try {

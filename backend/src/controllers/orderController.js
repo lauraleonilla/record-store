@@ -1,4 +1,4 @@
-import { pool } from "../../index.js";
+import { pool } from "../../api/index.js";
 
 export async function saveOrder(req, res) {
   const client = await pool.connect();
