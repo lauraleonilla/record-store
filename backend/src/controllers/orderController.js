@@ -11,7 +11,6 @@ export async function saveOrder(req, res) {
     totalPrice,
     deliveryMethod,
   } = req.body;
-
   try {
     const query = {
       text: "INSERT INTO orders (firstname, lastname, email, phonenum, ordereditems, totalprice, delivery_method) VALUES ($1, $2, $3, $4, $5, $6, $7);",
@@ -25,7 +24,7 @@ export async function saveOrder(req, res) {
         deliveryMethod,
       ],
     };
-    const data = await client.query(query);
+    await client.query(query);
     res.send().status(200);
   } catch (err) {
     res.status(err.status).send({

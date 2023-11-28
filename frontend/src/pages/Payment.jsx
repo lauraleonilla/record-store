@@ -35,9 +35,16 @@ export const Payment = () => {
 
   const submitOrder = async () => {
     const apiUrl = `${process.env.REACT_APP_API_URL}/main/order`;
+    const contactInfo = {};
+
+    for (const key in orderDetails) {
+      if (Object.prototype.hasOwnProperty.call(orderDetails, key)) {
+        contactInfo[key] = orderDetails[key].value;
+      }
+    }
     try {
       const res = await axios.post(apiUrl, {
-        ...orderDetails,
+        ...contactInfo,
         items: cart,
         totalPrice: calculateTotalPrice(),
         deliveryMethod: deliveryMethod === 'homeDelivery' ? 'HOME' : 'PICK_UP'
