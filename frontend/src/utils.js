@@ -2,26 +2,26 @@ import validator from 'validator';
 
 export const validateFormValues = (inputValues, deliveryMethod) => {
   let errors = {};
-  if (inputValues.firstName.length < 2) {
+  if (inputValues.firstName.isDirty && inputValues.firstName.value.length < 2) {
     errors.firstName = 'First name is too short';
   }
-  if (inputValues.lastName.length < 2) {
+  if (inputValues.lastName.isDirty && inputValues.lastName.value.length < 2) {
     errors.lastName = 'Last name is too short';
   }
-  if (!validator.isEmail(inputValues.email)) {
+  if (inputValues.email.isDirty && !validator.isEmail(inputValues.email.value)) {
     errors.email = 'Invalid email';
   }
-  if (!validator.isMobilePhone(inputValues.phoneNumber)) {
+  if (inputValues.phoneNumber.isDirty && !validator.isMobilePhone(inputValues.phoneNumber.value)) {
     errors.phoneNumber = 'Invalid phonenumber';
   }
   if (deliveryMethod === 'homeDelivery') {
-    if (inputValues.address && inputValues.address.length < 10) {
+    if (inputValues.address?.isDirty && inputValues.address.value.length < 10) {
       errors.address = 'Too short address';
     }
-    if (inputValues.postalCode && !/^[0-9]{5}$/.test(inputValues.postalCode)) {
+    if (inputValues.postalCode?.isDirty && !/^[0-9]{5}$/.test(inputValues.postalCode.value)) {
       errors.postalCode = 'Invalid postal code';
     }
-    if (inputValues.city && inputValues.city.length < 2) {
+    if (inputValues.city?.isDirty && inputValues.city.value.length < 2) {
       errors.city = 'Too short city name';
     }
   }

@@ -14,28 +14,23 @@ export const Checkout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const initialErrors = validateFormValues(orderDetails, deliveryMethod);
-    setErrors(initialErrors);
-  }, []);
-
-  useEffect(() => {
     if (deliveryMethod === 'homeDelivery') {
       updateOrderDetails({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: '',
-        address: '',
-        postalCode: '',
-        city: ''
+        firstName: { value: '', isDirty: false },
+        lastName: { value: '', isDirty: false },
+        email: { value: '', isDirty: false },
+        phoneNumber: { value: '', isDirty: false },
+        address: { value: '', isDirty: false },
+        postalCode: { value: '', isDirty: false },
+        city: { value: '', isDirty: false }
       });
     }
     if (deliveryMethod === 'pickUp') {
       updateOrderDetails({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: ''
+        firstName: { value: '', isDirty: false },
+        lastName: { value: '', isDirty: false },
+        email: { value: '', isDirty: false },
+        phoneNumber: { value: '', isDirty: false }
       });
     }
   }, [deliveryMethod]);
@@ -45,13 +40,17 @@ export const Checkout = () => {
   };
 
   const handleChange = (e) => {
-    updateOrderDetails({ ...orderDetails, [e.target.name]: e.target.value });
+    updateOrderDetails({
+      ...orderDetails,
+      [e.target.name]: { value: e.target.value, isDirty: true }
+    });
   };
 
   const validateInputFields = () => {
     const inputErrors = validateFormValues(orderDetails, deliveryMethod);
     setErrors(inputErrors);
-    if (!Object.values(inputErrors).length) {
+    const isFieldDirty = (field) => field.isDirty;
+    if (Object.values(orderDetails).every(isFieldDirty) && !Object.values(inputErrors).length) {
       setButtonDisabled(false);
     } else if (Object.values(inputErrors).length) {
       setButtonDisabled(true);
@@ -87,28 +86,28 @@ export const Checkout = () => {
         <StandardBold>Henkilötiedot</StandardBold>
         <FormInput
           description={'Etunimi*'}
-          value={orderDetails.firstName}
+          value={orderDetails.firstName.value}
           onChange={handleChange}
           onBlur={validateInputFields}
           name="firstName"
         />
         <FormInput
           description={'Sukunimi*'}
-          value={orderDetails.lastName}
+          value={orderDetails.lastName.value}
           onChange={handleChange}
           onBlur={validateInputFields}
           name="lastName"
         />
         <FormInput
           description={'Sähköposti*'}
-          value={orderDetails.email}
+          value={orderDetails.email.value}
           onChange={handleChange}
           onBlur={validateInputFields}
           name="email"
         />
         <FormInput
           description={'Puhelinnumero'}
-          value={orderDetails.phoneNumber}
+          value={orderDetails.phoneNumber.value}
           onChange={handleChange}
           onBlur={validateInputFields}
           name="phoneNumber"
@@ -118,21 +117,21 @@ export const Checkout = () => {
             <StandardBold>Toimitusosoite</StandardBold>
             <FormInput
               description={'Katuosoite*'}
-              value={orderDetails.address}
+              value={orderDetails.address.value}
               onChange={handleChange}
               onBlur={validateInputFields}
               name="address"
             />
             <FormInput
               description={'Postinumero*'}
-              value={orderDetails.postalCode}
+              value={orderDetails.postalCode.value}
               onChange={handleChange}
               onBlur={validateInputFields}
               name="postalCode"
             />
             <FormInput
               description={'Toimipaikka*'}
-              value={orderDetails.city}
+              value={orderDetails.city.value}
               onChange={handleChange}
               onBlur={validateInputFields}
               name="city"
