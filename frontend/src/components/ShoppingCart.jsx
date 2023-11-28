@@ -66,6 +66,7 @@ const ShoppingCart = () => {
 };
 
 const ComponentContainer = styled.div`
+  grid-column: 3 / 4;
   display: flex;
   position: sticky;
   top: 7.75rem;

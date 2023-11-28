@@ -2,15 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import SearchField from './SearchField';
+import { useContext } from 'react';
+import { UserContext } from './context/UserContext';
 
 const TopBar = () => {
+  const { user, updateUser } = useContext(UserContext);
   return (
     <Container>
       <GreenBar>
         <HeaderNavLink to="/">ETUSIVU</HeaderNavLink>
         <HeaderNavLink to="/records/1">LEVYT</HeaderNavLink>
-        <LoginNavLink to="/user/register">KIRJAUDU SISÄÄN</LoginNavLink>
-        {/* vaihdetaan tilalle /login, jonka kautta ohjataan registeriin */}
+        <Usertext>{user}</Usertext>
+        {user ? (
+          <LoginNavLink onClick={() => updateUser(null)}>KIRJAUDU ULOS</LoginNavLink>
+        ) : (
+          <LoginNavLink to="/user/login">KIRJAUDU SISÄÄN</LoginNavLink>
+        )}
       </GreenBar>
       <WhiteBar>
         <SearchField />
@@ -50,6 +57,11 @@ const LoginNavLink = styled(NavLink)`
   text-decoration: none;
   margin-left: auto;
   margin-right: 20px;
+`;
+
+const Usertext = styled.span`
+  margin-left: auto;
+  margin-right: 10px;
 `;
 
 export default TopBar;

@@ -34,33 +34,33 @@ export default function Home() {
         <HomeHeaderContainer>
           <HomeHeader>Viikon uutuudet</HomeHeader>
         </HomeHeaderContainer>
-        <ModifiedAlbumContainer>{albumCards}</ModifiedAlbumContainer>;
+        <ModifiedAlbumContainer>{albumCards}</ModifiedAlbumContainer>
       </HomeContent>
     </HomeContainer>
   );
 }
 
 const HomeContainer = styled.div`
-  grid-column: 2 / 3;
+  grid-area: 1 / 2 / 2 / 3;
   min-width: 100%;
 `;
 
 const Homebanner = styled.div`
   background: ${(props) => props.theme.white};
+  width: 100%;
   padding: 2.5rem;
   text-align: center;
   font-size: 2rem;
   margin-bottom: 2rem;
-  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
+  box-shadow: ${(props) => props.theme.shadows.smallAroundDark};
 `;
 
-const HomeContent = styled.div`
-  box-shadow: ${(props) => props.theme.shadows.smallAroundLight};
-`;
+const HomeContent = styled.div``;
 
 const HomeHeaderContainer = styled.div`
   padding: 3rem 0 2rem 0;
   background: ${(props) => props.theme.lightGrey};
+  box-shadow: ${(props) => props.theme.shadows.smallAroundDark};
 `;
 
 const HomeHeader = styled.div`
@@ -72,5 +72,5 @@ const HomeHeader = styled.div`
 `;
 
 const ModifiedAlbumContainer = styled(AlbumContainer)`
-  box-shadow: none;
+  box-shadow: ${(props) => props.theme.shadows.smallAroundDark};
 `;

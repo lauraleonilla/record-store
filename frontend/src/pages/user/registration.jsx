@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { MainContent } from '../../components/MainContent';
 import validator from 'validator';
+import { Link, useNavigate } from 'react-router-dom';
 
-function Input({ type, labelName, id, value, onChange, onBlur, error }) {
+export function Input({ type, labelName, id, value, onChange, onBlur, error }) {
   return (
     <InputWrapper>
       <Error>{error}</Error>
@@ -38,6 +38,7 @@ const InputField = styled.input`
 `;
 
 export function Registration() {
+  const navigate = useNavigate();
   const [inputValues, setInputvalues] = useState({
     firstName: '',
     lastName: '',
@@ -158,6 +159,7 @@ export function Registration() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     const checkIfErrors = Object.values(errors).every((value) => value === '');
     const checkIfNotEmpty = checkEmptyFields();
 
@@ -188,112 +190,101 @@ export function Registration() {
   }
 
   return (
-    <MainContent>
-      <FormWrapper>
-        <FormHeader>Luo käyttäjätili</FormHeader>
-        <RegistrationForm onSubmit={handleSubmit}>
-          <Instruction>Tähdellä merkityt kentät ovat pakollisia</Instruction>
-          <Input
-            labelName={'Etunimi*'}
-            id={'firstName'}
-            value={inputValues.firstName}
-            error={errors.firstName}
-            onChange={handleChange}
-            onBlur={validateInput}
-          />
-          <Input
-            labelName={'Sukunimi*'}
-            id={'lastName'}
-            value={inputValues.lastName}
-            error={errors.lastName}
-            onChange={handleChange}
-            onBlur={validateInput}
-          />
-          <Input
-            labelName={'Osoite'}
-            id={'address'}
-            value={inputValues.address}
-            error={errors.address}
-            onChange={handleChange}
-            onBlur={validateInput}
-          />
-          <Input
-            labelName={'Postinumero'}
-            id={'postalCode'}
-            value={inputValues.postalCode}
-            error={errors.postalCode}
-            onChange={handleChange}
-            onBlur={validateInput}
-          />
-          <Input
-            labelName={'Kaupunki'}
-            id={'city'}
-            value={inputValues.city}
-            error={errors.city}
-            onChange={handleChange}
-            onBlur={validateInput}
-          />
-          <Input
-            labelName={'Sähköposti*'}
-            id={'email'}
-            value={inputValues.email}
-            error={errors.email}
-            onChange={handleChange}
-            onBlur={(e) => {
-              validateInput(e);
-              checkEmailAvailability();
-            }}
-          />
-          <Input
-            labelName={'Puhelinnumero'}
-            id={'phoneNumber'}
-            value={inputValues.phoneNumber}
-            error={errors.phoneNumber}
-            onChange={handleChange}
-            onBlur={validateInput}
-          />
-          <Input
-            type={'password'}
-            labelName={'Salasana*'}
-            id={'password'}
-            value={inputValues.password}
-            error={errors.password}
-            onChange={handleChange}
-            onBlur={validateInput}
-          />
-          <Input
-            type={'password'}
-            labelName={'Vahvista salasana*'}
-            id={'confirmPassword'}
-            value={inputValues.confirmPassword}
-            error={errors.confirmPassword}
-            onChange={handleChange}
-            onBlur={validateInput}
-          />
-          <ButtonWrapper>
-            <Button $submit={true} type="submit">
-              Rekisteröidy
-            </Button>
+    <>
+      <FormHeader>Luo käyttäjätili</FormHeader>
+      <Form onSubmit={handleSubmit}>
+        <Instruction>Tähdellä merkityt kentät ovat pakollisia</Instruction>
+        <Input
+          labelName={'Etunimi*'}
+          id={'firstName'}
+          value={inputValues.firstName}
+          error={errors.firstName}
+          onChange={handleChange}
+          onBlur={validateInput}
+        />
+        <Input
+          labelName={'Sukunimi*'}
+          id={'lastName'}
+          value={inputValues.lastName}
+          error={errors.lastName}
+          onChange={handleChange}
+          onBlur={validateInput}
+        />
+        <Input
+          labelName={'Osoite'}
+          id={'address'}
+          value={inputValues.address}
+          error={errors.address}
+          onChange={handleChange}
+          onBlur={validateInput}
+        />
+        <Input
+          labelName={'Postinumero'}
+          id={'postalCode'}
+          value={inputValues.postalCode}
+          error={errors.postalCode}
+          onChange={handleChange}
+          onBlur={validateInput}
+        />
+        <Input
+          labelName={'Kaupunki'}
+          id={'city'}
+          value={inputValues.city}
+          error={errors.city}
+          onChange={handleChange}
+          onBlur={validateInput}
+        />
+        <Input
+          labelName={'Sähköposti*'}
+          id={'email'}
+          value={inputValues.email}
+          error={errors.email}
+          onChange={handleChange}
+          onBlur={(e) => {
+            validateInput(e);
+            checkEmailAvailability();
+          }}
+        />
+        <Input
+          labelName={'Puhelinnumero'}
+          id={'phoneNumber'}
+          value={inputValues.phoneNumber}
+          error={errors.phoneNumber}
+          onChange={handleChange}
+          onBlur={validateInput}
+        />
+        <Input
+          type={'password'}
+          labelName={'Salasana*'}
+          id={'password'}
+          value={inputValues.password}
+          error={errors.password}
+          onChange={handleChange}
+          onBlur={validateInput}
+        />
+        <Input
+          type={'password'}
+          labelName={'Vahvista salasana*'}
+          id={'confirmPassword'}
+          value={inputValues.confirmPassword}
+          error={errors.confirmPassword}
+          onChange={handleChange}
+          onBlur={validateInput}
+        />
+        <ButtonWrapper>
+          <Button $primary={true} type="submit">
+            Rekisteröidy
+          </Button>
+          <BackLink to="/">
             <Button>Peruuta</Button>
-          </ButtonWrapper>
-        </RegistrationForm>
-      </FormWrapper>
-    </MainContent>
+          </BackLink>
+        </ButtonWrapper>
+      </Form>
+    </>
   );
 }
 
-const FormWrapper = styled.div`
-  grid-area: 1 / 2 / 2 / 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: fit-content;
-  padding: 3rem clamp(1rem, 4vw, 4rem);
-  gap: 2rem;
-  background: ${(props) => props.theme.lightGrey};
-  box-shadow: ${(props) => props.theme.shadows.smallAroundDark};
-`;
-const FormHeader = styled.header`
+export const FormHeader = styled.header`
   font-size: 2rem;
   text-align: center;
   margin-bottom: 1rem;
@@ -302,24 +293,27 @@ const Instruction = styled.p`
   text-align: center;
   align-self: start;
 `;
-const RegistrationForm = styled.form`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: clamp(15rem, 50vw, 30rem);
   gap: 1.5rem;
 `;
 
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   margin-top: 2rem;
 `;
-const Button = styled.button`
-  background: ${(props) => (props.$submit ? props.theme.orange : props.theme.midGrey)};
+export const Button = styled.button`
+  width: 100%;
+  background: ${(props) => (props.$primary ? props.theme.orange : props.theme.midGrey)};
   padding: 0.75rem;
   border: 0;
   border-radius: 3px;
   font-weight: bold;
   box-shadow: grey 2px 2px 2px 0px;
 `;
+
+const BackLink = styled(Link)``;

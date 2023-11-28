@@ -17,6 +17,9 @@ import RecordsLayout from './components/RecordsLayout';
 import { OrderSuccess } from './pages/OrderSuccess';
 import { Payment } from './pages/Payment';
 import { Registration } from './pages/user/registration';
+import { LoginForm } from './pages/user/Login';
+import { LoginLayout } from './pages/user/LoginLayout';
+import { UserProvider } from './context/UserContext';
 
 const App = () => {
   return (
@@ -27,25 +30,30 @@ const App = () => {
           <Header>
             <LogoText>LEVYKAUPPA-Y</LogoText>
           </Header>
-          <TopBar />
-          <CartProvider>
-            <Routes>
-              <Route element={<RecordsLayout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="records">
-                  <Route path=":page" element={<CatalogPage />} />
-                  <Route path="genre/:categoryName/:page" element={<FilteredCategory />} />
+          <UserProvider>
+            <TopBar />
+            <CartProvider>
+              <Routes>
+                <Route element={<RecordsLayout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="records">
+                    <Route path=":page" element={<CatalogPage />} />
+                    <Route path="genre/:categoryName/:page" element={<FilteredCategory />} />
+                  </Route>
+                  <Route path="search" element={<AlbumSearch />} />
                 </Route>
-                <Route path="search" element={<AlbumSearch />} />
-              </Route>
-              <Route path="user">
-                <Route path="register" element={<Registration />} />
-              </Route>
-              <Route path="checkout" element={<Checkout />} />
-              <Route path="payment" element={<Payment />} />
-              <Route path="success" element={<OrderSuccess />} />
-            </Routes>
-          </CartProvider>
+                <Route element={<LoginLayout />}>
+                  <Route path="user">
+                    <Route path="register" element={<Registration />} />
+                    <Route path="login" element={<LoginForm />} />
+                  </Route>
+                </Route>
+                <Route path="checkout" element={<Checkout />} />
+                <Route path="payment" element={<Payment />} />
+                <Route path="success" element={<OrderSuccess />} />
+              </Routes>
+            </CartProvider>
+          </UserProvider>
         </SearchProvider>
         <Footer />
       </StyledApp>
