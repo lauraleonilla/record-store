@@ -11,7 +11,15 @@ const Categories = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(apiUrl);
-        setCategories(response.data);
+        if (response && response.data) {
+          const allCategoryIndex = response.data.findIndex(
+            (category) => category?.categoryname === 'Kaikki kategoriat'
+          );
+          const allCategory = response.data[allCategoryIndex];
+          response.data.splice(allCategoryIndex, 1);
+          response.data.splice(0, 0, allCategory);
+          setCategories(response.data);
+        }
       } catch (error) {
         console.error('Error: ', error);
       }
