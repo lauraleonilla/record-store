@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-  // origin: 'https://recort-store-fe.onrender.com',
+  origin: 'https://recort-store-fe.onrender.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -39,7 +39,7 @@ const corsOptions = {
 
 app.options('*', cors(corsOptions));
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use('/main', mainRouter);
 
