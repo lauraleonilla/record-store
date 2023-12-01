@@ -20,6 +20,7 @@ import { Registration } from './pages/user/registration';
 import { LoginForm } from './pages/user/Login';
 import { LoginLayout } from './pages/user/LoginLayout';
 import { UserProvider } from './context/UserContext';
+import { ProfilePage } from './pages/user/ProfilePage';
 
 const App = () => {
   return (
@@ -46,6 +47,7 @@ const App = () => {
                   <Route path="user">
                     <Route path="register" element={<Registration />} />
                     <Route path="login" element={<LoginForm />} />
+                    <Route path="profile" element={<ProfilePage />} />
                   </Route>
                 </Route>
                 <Route path="checkout" element={<Checkout />} />

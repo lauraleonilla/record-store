@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { UserContext } from './context/UserContext';
 
 const TopBar = () => {
-  const { user, updateUser } = useContext(UserContext);
+  const { user, logoutUser } = useContext(UserContext);
   return (
     <Container>
       <GreenBar>
@@ -17,7 +17,10 @@ const TopBar = () => {
         <UserControls>
           <Usertext>{user}</Usertext>
           {user ? (
-            <LoginNavLink onClick={() => updateUser(null)}>KIRJAUDU ULOS</LoginNavLink>
+            <>
+              <LoginNavLink to="/user/profile">PROFIILI</LoginNavLink>
+              <LoginNavLink onClick={() => logoutUser(null)}>KIRJAUDU ULOS</LoginNavLink>
+            </>
           ) : (
             <LoginNavLink to="/user/login">KIRJAUDU SISÄÄN</LoginNavLink>
           )}

@@ -33,8 +33,11 @@ function validateForm(e, pw) {
 
 export function LoginForm() {
   const navigate = useNavigate();
-  const { updateUser } = useContext(UserContext);
-  const [formValues, setFormValues] = useState({ email: '', password: '' });
+  const { loginUser } = useContext(UserContext);
+  const [formValues, setFormValues] = useState({
+    email: 'testaaja@testaaja.fi',
+    password: 'testipassu'
+  });
   const [errors, setErrors] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -57,6 +60,7 @@ export function LoginForm() {
       try {
         const loginData = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
           method: 'POST',
+          credentials: 'include',
           headers: {
             'content-type': 'application/json'
           },
@@ -64,15 +68,16 @@ export function LoginForm() {
         });
         if (loginData.ok) {
           const response = await loginData.json();
-          console.log(response);
           if (response === 'incorrect email') {
             setErrors({ email: 'Sähköpostilla ei löydy käyttäjää.' });
+            return;
           }
           if (response === 'incorrect password') {
             setErrors({ password: 'Väärä salasana' });
+            return;
           }
           navigate('/');
-          updateUser(response);
+          loginUser(response);
         }
       } catch (err) {
         console.error('Error when trying to login:', err);
