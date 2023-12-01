@@ -1,29 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { AlbumContainer } from '../components/AlbumContainer';
 import { createCards } from '../hooks/useAlbumData';
+import { UserContext } from '../context/UserContext';
 
 export default function Home() {
   const [albumCards, setAlbumCards] = useState();
+  const { user, loginUser } = useContext(UserContext);
+
+  async function getAlbumData() {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/albums/newreleases`, {
+        method: 'GET',
+
+        headers: {
+          'content-type': 'application/json'
+        }
+      });
+      if (res.ok) {
+        const albumData = await res.json();
+        const cards = await createCards(albumData);
+        setAlbumCards(cards);
+      }
+    } catch (err) {
+      console.log('failed to get data: ', err);
+    }
+  }
 
   useEffect(() => {
-    async function getAlbumData() {
-      try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/albums/newreleases`, {
-          method: 'GET',
-          headers: {
-            'content-type': 'application/json'
-          }
-        });
-        if (res.ok) {
-          const albumData = await res.json();
-          const cards = await createCards(albumData);
-          setAlbumCards(cards);
-        }
-      } catch (err) {
-        console.log('failed to get data: ', err);
-      }
-    }
     getAlbumData();
   }, []);
 
