@@ -79,8 +79,7 @@ export async function loginUser(req, res) {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      domain: 'https://recort-store-fe.onrender.com/',
-      path: '/',
+      domain: 'recort-store-fe.onrender.com',
     });
     res.json({ email: email, accessToken: accessToken }).status(200);
   } catch (err) {
