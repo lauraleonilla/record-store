@@ -75,7 +75,13 @@ export async function loginUser(req, res) {
     const user = { email: email };
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-    res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'none' });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      domain: 'https://recort-store-fe.onrender.com/',
+      path: '/',
+    });
     res.json({ email: email, accessToken: accessToken }).status(200);
   } catch (err) {
     console.error('Error logging in user:', err);
