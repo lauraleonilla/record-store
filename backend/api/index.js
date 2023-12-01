@@ -29,7 +29,12 @@ pool.on('error', (err) => {
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+
+const corsOptions = {
+  origin: 'https://recort-store-fe.onrender.com',
+};
+
+app.use(cors(corsOptions));
 
 app.use('/main', mainRouter);
 
