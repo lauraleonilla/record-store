@@ -32,6 +32,7 @@ app.use(cookieParser());
 
 const corsOptions = {
   origin: 'https://recort-store-fe.onrender.com',
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
