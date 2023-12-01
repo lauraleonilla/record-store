@@ -7,6 +7,7 @@ import { UserContext } from './context/UserContext';
 
 const TopBar = () => {
   const { user, logoutUser } = useContext(UserContext);
+
   return (
     <Container>
       <GreenBar>
@@ -19,7 +20,9 @@ const TopBar = () => {
           {user ? (
             <>
               <LoginNavLink to="/user/profile">PROFIILI</LoginNavLink>
-              <LoginNavLink onClick={() => logoutUser(null)}>KIRJAUDU ULOS</LoginNavLink>
+              <LoginNavLink to="/" onClick={() => logoutUser(null)}>
+                KIRJAUDU ULOS
+              </LoginNavLink>
             </>
           ) : (
             <LoginNavLink to="/user/login">KIRJAUDU SISÄÄN</LoginNavLink>

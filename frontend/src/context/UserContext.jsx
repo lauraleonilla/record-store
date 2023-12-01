@@ -1,8 +1,10 @@
 import { createContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
 
@@ -12,11 +14,12 @@ export function UserProvider({ children }) {
     setAccessToken(user.accessToken);
   }
 
-  function logoutUser() {
-    setUser(null);
+  function logoutUser(value) {
+    setUser(value);
     localStorage.removeItem('user');
   }
-  async function authUser() {
+
+  async function authenticateUser() {
     if (user) {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/generatetoken`, {
         method: 'POST',
@@ -38,7 +41,7 @@ export function UserProvider({ children }) {
     const user = localStorage.getItem('user');
     if (user) {
       setUser(JSON.parse(user));
-      authUser();
+      authenticateUser();
     }
   }, [user]);
 
