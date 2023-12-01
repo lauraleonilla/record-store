@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: 'https://recort-store-fe.onrender.com',
+  origin: 'https://recort-store-fe.onrender.com/user/login',
   credentials: true,
 };
 
